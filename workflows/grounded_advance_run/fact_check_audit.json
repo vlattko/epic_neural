@@ -1,0 +1,10 @@
+{
+  "checks_performed": [
+    "PASS: SSOS percentage (93.1%) verified against ground truth.",
+    "PASS: Fortran dispatch percentage (6.9%) verified against ground truth."
+  ],
+  "passed_checks": 2,
+  "failed_checks": 0,
+  "all_verified": true,
+  "mock_or_random_detected": false
+}

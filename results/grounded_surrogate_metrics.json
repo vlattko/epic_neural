@@ -1,0 +1,305 @@
+{
+  "overall": {
+    "yield_t_ha": {
+      "mae": 0.0306,
+      "rmse": 0.0603,
+      "nrmse_pct": 1.24,
+      "r2": 0.9978,
+      "pbias_pct": -0.04,
+      "mean_true": 5.6972,
+      "mean_pred": 5.6949
+    },
+    "act_et_mm": {
+      "mae": 1.7823,
+      "rmse": 3.8285,
+      "nrmse_pct": 1.02,
+      "r2": 0.9963,
+      "pbias_pct": -0.07,
+      "mean_true": 630.6434,
+      "mean_pred": 630.198
+    },
+    "pet_mm": {
+      "mae": 3.134,
+      "rmse": 4.6988,
+      "nrmse_pct": 0.78,
+      "r2": 0.9983,
+      "pbias_pct": -0.03,
+      "mean_true": 1297.8973,
+      "mean_pred": 1297.5111
+    },
+    "water_deficit_mm": {
+      "mae": 3.2031,
+      "rmse": 6.5525,
+      "nrmse_pct": 1.23,
+      "r2": 0.997,
+      "pbias_pct": 0.0,
+      "mean_true": 667.2539,
+      "mean_pred": 667.2557
+    },
+    "runoff_mm": {
+      "mae": 0.427,
+      "rmse": 0.9461,
+      "nrmse_pct": 1.43,
+      "r2": 0.9927,
+      "pbias_pct": -0.55,
+      "mean_true": 15.5473,
+      "mean_pred": 15.4612
+    },
+    "percolation_mm": {
+      "mae": 1.7599,
+      "rmse": 5.3223,
+      "nrmse_pct": 1.71,
+      "r2": 0.9919,
+      "pbias_pct": -0.87,
+      "mean_true": 98.8269,
+      "mean_pred": 97.9704
+    },
+    "irrigation_mm": {
+      "mae": 0.9325,
+      "rmse": 1.4563,
+      "nrmse_pct": 0.89,
+      "r2": 0.9994,
+      "pbias_pct": -0.8,
+      "mean_true": 30.172,
+      "mean_pred": 29.9313
+    },
+    "soc_delta_t_c_ha": {
+      "mae": 0.5311,
+      "rmse": 0.8861,
+      "nrmse_pct": 2.14,
+      "r2": 0.9899,
+      "pbias_pct": 0.17,
+      "mean_true": 23.3178,
+      "mean_pred": 23.358
+    },
+    "water_stress_days": {
+      "mae": 0.1912,
+      "rmse": 0.3328,
+      "nrmse_pct": 1.1,
+      "r2": 0.9981,
+      "pbias_pct": -0.03,
+      "mean_true": 30.5614,
+      "mean_pred": 30.5523
+    },
+    "temp_stress_days": {
+      "mae": 0.0881,
+      "rmse": 0.1602,
+      "nrmse_pct": 1.78,
+      "r2": 0.9953,
+      "pbias_pct": 0.03,
+      "mean_true": 29.6869,
+      "mean_pred": 29.6958
+    },
+    "usle_erosion_t_ha": {
+      "mae": 0.7866,
+      "rmse": 2.1248,
+      "nrmse_pct": 0.9,
+      "r2": 0.9954,
+      "pbias_pct": -0.74,
+      "mean_true": 16.0703,
+      "mean_pred": 15.9519
+    }
+  },
+  "train": {
+    "yield_t_ha": {
+      "mae": 0.0272,
+      "rmse": 0.0397,
+      "nrmse_pct": 0.82,
+      "r2": 0.999,
+      "pbias_pct": -0.0,
+      "mean_true": 5.706,
+      "mean_pred": 5.7059
+    },
+    "act_et_mm": {
+      "mae": 1.5516,
+      "rmse": 2.308,
+      "nrmse_pct": 0.61,
+      "r2": 0.9987,
+      "pbias_pct": -0.05,
+      "mean_true": 628.9052,
+      "mean_pred": 628.5747
+    },
+    "pet_mm": {
+      "mae": 2.9645,
+      "rmse": 3.9662,
+      "nrmse_pct": 0.66,
+      "r2": 0.9989,
+      "pbias_pct": -0.03,
+      "mean_true": 1293.3991,
+      "mean_pred": 1292.9773
+    },
+    "water_deficit_mm": {
+      "mae": 2.8201,
+      "rmse": 3.848,
+      "nrmse_pct": 0.72,
+      "r2": 0.999,
+      "pbias_pct": -0.02,
+      "mean_true": 664.4938,
+      "mean_pred": 664.3428
+    },
+    "runoff_mm": {
+      "mae": 0.364,
+      "rmse": 0.5304,
+      "nrmse_pct": 0.8,
+      "r2": 0.9977,
+      "pbias_pct": -0.4,
+      "mean_true": 15.5563,
+      "mean_pred": 15.494
+    },
+    "percolation_mm": {
+      "mae": 1.4708,
+      "rmse": 2.7979,
+      "nrmse_pct": 0.9,
+      "r2": 0.9978,
+      "pbias_pct": -0.8,
+      "mean_true": 100.2365,
+      "mean_pred": 99.4334
+    },
+    "irrigation_mm": {
+      "mae": 0.9136,
+      "rmse": 1.4151,
+      "nrmse_pct": 0.86,
+      "r2": 0.9995,
+      "pbias_pct": -0.83,
+      "mean_true": 30.158,
+      "mean_pred": 29.9062
+    },
+    "soc_delta_t_c_ha": {
+      "mae": 0.4831,
+      "rmse": 0.7357,
+      "nrmse_pct": 1.82,
+      "r2": 0.9927,
+      "pbias_pct": 0.18,
+      "mean_true": 23.4014,
+      "mean_pred": 23.4431
+    },
+    "water_stress_days": {
+      "mae": 0.172,
+      "rmse": 0.2386,
+      "nrmse_pct": 0.79,
+      "r2": 0.999,
+      "pbias_pct": -0.07,
+      "mean_true": 30.5407,
+      "mean_pred": 30.5182
+    },
+    "temp_stress_days": {
+      "mae": 0.0781,
+      "rmse": 0.1095,
+      "nrmse_pct": 1.22,
+      "r2": 0.9978,
+      "pbias_pct": 0.04,
+      "mean_true": 29.6998,
+      "mean_pred": 29.7104
+    },
+    "usle_erosion_t_ha": {
+      "mae": 0.6743,
+      "rmse": 1.3556,
+      "nrmse_pct": 0.67,
+      "r2": 0.9982,
+      "pbias_pct": -0.28,
+      "mean_true": 16.2045,
+      "mean_pred": 16.1587
+    }
+  },
+  "test": {
+    "yield_t_ha": {
+      "mae": 0.0384,
+      "rmse": 0.0918,
+      "nrmse_pct": 1.89,
+      "r2": 0.9947,
+      "pbias_pct": -0.13,
+      "mean_true": 5.6767,
+      "mean_pred": 5.6694
+    },
+    "act_et_mm": {
+      "mae": 2.3206,
+      "rmse": 6.0357,
+      "nrmse_pct": 1.81,
+      "r2": 0.9896,
+      "pbias_pct": -0.11,
+      "mean_true": 634.6992,
+      "mean_pred": 633.9856
+    },
+    "pet_mm": {
+      "mae": 3.5293,
+      "rmse": 6.0738,
+      "nrmse_pct": 1.05,
+      "r2": 0.9968,
+      "pbias_pct": -0.02,
+      "mean_true": 1308.3933,
+      "mean_pred": 1308.0902
+    },
+    "water_deficit_mm": {
+      "mae": 4.0967,
+      "rmse": 10.4195,
+      "nrmse_pct": 1.96,
+      "r2": 0.9921,
+      "pbias_pct": 0.05,
+      "mean_true": 673.6941,
+      "mean_pred": 674.0526
+    },
+    "runoff_mm": {
+      "mae": 0.5739,
+      "rmse": 1.5255,
+      "nrmse_pct": 2.51,
+      "r2": 0.98,
+      "pbias_pct": -0.91,
+      "mean_true": 15.5264,
+      "mean_pred": 15.3846
+    },
+    "percolation_mm": {
+      "mae": 2.4345,
+      "rmse": 8.7267,
+      "nrmse_pct": 2.82,
+      "r2": 0.9776,
+      "pbias_pct": -1.03,
+      "mean_true": 95.5378,
+      "mean_pred": 94.5569
+    },
+    "irrigation_mm": {
+      "mae": 0.9766,
+      "rmse": 1.5483,
+      "nrmse_pct": 0.97,
+      "r2": 0.9993,
+      "pbias_pct": -0.71,
+      "mean_true": 30.2049,
+      "mean_pred": 29.9898
+    },
+    "soc_delta_t_c_ha": {
+      "mae": 0.6432,
+      "rmse": 1.1637,
+      "nrmse_pct": 2.81,
+      "r2": 0.9839,
+      "pbias_pct": 0.16,
+      "mean_true": 23.1225,
+      "mean_pred": 23.1594
+    },
+    "water_stress_days": {
+      "mae": 0.2361,
+      "rmse": 0.486,
+      "nrmse_pct": 1.63,
+      "r2": 0.9959,
+      "pbias_pct": 0.07,
+      "mean_true": 30.6099,
+      "mean_pred": 30.6319
+    },
+    "temp_stress_days": {
+      "mae": 0.1114,
+      "rmse": 0.2399,
+      "nrmse_pct": 2.67,
+      "r2": 0.9895,
+      "pbias_pct": 0.02,
+      "mean_true": 29.657,
+      "mean_pred": 29.6616
+    },
+    "usle_erosion_t_ha": {
+      "mae": 1.0486,
+      "rmse": 3.2805,
+      "nrmse_pct": 1.39,
+      "r2": 0.9884,
+      "pbias_pct": -1.83,
+      "mean_true": 15.7573,
+      "mean_pred": 15.4693
+    }
+  }
+}

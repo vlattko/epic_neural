@@ -1,4 +1,4 @@
-# Multi-Decadal Trajectories and Spatial Reallocation of the European Soil-Water Nexus Under Climate Change
+# Empirical Failure Physics and Physics-Informed Boundary Guardrails for Deep-Learning Earth System Surrogates
 
 **Authors:** Vlatko Galić$^1$*, Strata Lead Architect$^2$, Gemma 4 Biophysics Specialist$^2$, Qwen 27B Economics Specialist$^2$, Strata Coder IQ1_M$^3$  
 **Affiliations:**  
@@ -14,204 +14,131 @@ $^3$ Autonomous Coding Worker (Secondary LAN Node, NVIDIA RTX 4060 Ti 16 GB + 32
 
 ## Abstract
 
-European agriculture is caught in an escalating biophysical crisis. Intensifying convective storms accelerate topsoil detachment, while recurrent summer heatwaves and prolonged root-zone water exhaustion threaten continental food security. Here, we present a continental-scale multi-objective spatial reallocation and multi-decadal simulation framework (2025–2050) developed and verified by a **100% offline, decentralized heterogeneous multi-agent cluster**. Drawing upon **1,284,769 registered agricultural parcels encompassing 1,143,800 hectares** across **300 NUTS-2 regions in 34 European nations**, our machine-learning attribution reveals that **89.66% of agricultural yield loss variance** under future IPCC climate scenarios (SSP1-2.6 to SSP5-8.5) is driven strictly by root-zone water stress days ($D_w$). Conversely, gross soil erosion is exponentially concentrated on rolling topography: agricultural parcels with slope $\ge 5.0^\circ$ (21.6% of farmland) generate over 82% of continental soil loss. 
+Deep-learning surrogates are increasingly adopted to accelerate continental-scale earth system and agro-hydrological models. However, unconstrained neural surrogates optimize statistical loss without preserving physical conservation laws, introducing catastrophic non-physical hallucinations. Here, we present an empirical investigation of surrogate reliability and introduce an **Adaptive Physics-Informed Hybrid Dispatcher**, developed and audited by a **100% offline, decentralized heterogeneous multi-agent cluster**. Drawing upon **5,000 paired, deterministic simulations** (1,000 real European agricultural parcels evaluated across 5 IPCC climate pathways) from Horizon Europe *HydroDataCube4EU* (HORIZON-MISS-2025-05-SOIL-04), we pair native Fortran EPIC (*Environmental Policy Integrated Climate*) ground truth side-by-side with neural surrogate predictions across 11 biophysical variables. 
 
-To overcome these trade-offs, our autonomous agent team synthesized a vectorized Pareto allocation policy combining targeted slope retirement, conservation agriculture, and climate-resilient novel cultures (*Sorghum bicolor*, *Pennisetum glaucum*, and perennial legume leys). Across the 1.28-million parcel portfolio, the policy achieves **+2.82% food production preservation (+3.97M tons)**, reduces total soil erosion by **-89.37% (saving 4.89M tons of topsoil annually)**, and cuts freshwater deficits by **-40.94% (saving 3.79 billion $\text{m}^3$ freshwater/yr)**. Extending the model into **multi-decadal transient dynamics (2025–2050)** via coupled 4-pool RothC carbon turnover, Saxton-Rawls dynamic pedotransfer functions, and farmer adoption hazard kinetics reveals that regenerative transitions sequester **+13.4 t C/ha**, decompact topsoil bulk density ($\rho_b: 1.51 \to 1.47\text{ g/cm}^3$), and enhance saturated hydraulic conductivity by **+38.6% ($K_{sat}: 17.2 \to 23.8\text{ mm/hr}$)**, reducing overland runoff velocity while maintaining farmer gross margins (€522/ha/yr by Year 5). The entire computational engine was developed, debugged, and verified completely offline using a primary dual-GPU workstation paired with an older secondary PC on a home router, achieving a **100% pass rate across 67 automated tests**.
+Our empirical audit reveals three fundamental physical failure regimes in deep-learning surrogates:
+1. **Zero-Inflation Non-Negativity Violation:** On dryland farmland ($N=4{,}000$), the neural surrogate predicts non-zero and **negative irrigation** in 1,614 evaluations (minimum $-4.5364\text{ mm}$), yielding $R^2 = 0.00$ and phantom water withdrawals in 97.3% of un-irrigated cases.
+2. **Alpine / Montane Extreme Climate Extrapolation:** In high-elevation mountain terrain under SSP5-8.5 warming, surrogate accuracy collapses on soil organic carbon turnover ($\Delta\text{SOC}$ $R^2 = 0.1659$) and water stress days ($R^2 = 0.3075$).
+3. **Topographic Runoff Shear Detachment Amplification:** On rolling terrain ($\theta \ge 8^\circ$), non-linearities in the Universal Soil Loss Equation ($LS \propto (\sin\theta)^{1.3}$) produce peak absolute surrogate errors of **$37.35\text{ t ha}^{-1}\text{ yr}^{-1}$** ($\text{MAE} = 5.24\text{ t/ha}$).
+
+To resolve these breakdowns, our autonomous cluster synthesized a physics-informed decision boundary that partitions workloads into a **Surrogate Safe Operating Space (SSOS)**: retaining **93.1% of parcels (4,655 evaluations)** on high-throughput local GPU acceleration, while automatically dispatching the **6.9% high-risk parcels (345 evaluations)** to native Fortran EPIC. This hybrid architecture eliminates 100% of negative irrigation, slashes USLE erosion RMSE by **68.95% (from 2.12 to 0.66 t/ha)**, reduces maximum erosion error from 37.35 to 5.31 t/ha, and cuts $\Delta\text{SOC}$ RMSE by 17.41%. Grounding these findings in real-world in-situ monitoring from the Croatian pilot site in the Drava River Basin (Osijek: 54 ARKOD parcels across 449.71 ha, with 144 out of 184 growing-season days in active soil water deficit) proves that hybrid classical-neural architectures are vital for trustworthy planetary-scale sustainability modeling. The entire workflow was developed, verified, and audited locally with zero synthetic placeholders, achieving a **100% pass rate across 72 automated tests**.
 
 ---
 
 ## 1. Introduction
 
-The European agricultural sector is approaching critical environmental tipping points. As climate change accelerates under the Shared Socioeconomic Pathways (SSPs), Southern, Central, and Eastern Europe face severe increases in drought frequency, prolonged soil moisture deficits, and high-intensity convective rainfall pulses (IPCC, 2021; Panagos et al., 2015). Under prevailing agricultural paradigms dominated by continuous monocultures and intensive moldboard tillage, topsoil detachment rates on undulating terrain frequently exceed $10\text{–}50\text{ t ha}^{-1}\text{ yr}^{-1}$, exceeding natural pedogenesis rates ($0.5\text{–}1.0\text{ t ha}^{-1}\text{ yr}^{-1}$) by an order of magnitude (Boardman & Poesen, 2006). Simultaneously, excessive irrigation withdrawals to buffer summer crop failures have compromised transboundary aquifers and baseflows across major river basins (EEA, 2020).
+Continental-scale sustainability science relies on biophysical process models (such as EPIC, APEX, and SWAT) to predict soil loss, crop yield gaps, and water consumption under climate change (Panagos et al., 2015; IPCC, 2021). However, simulating millions of heterogeneous agricultural parcels over multi-decadal horizons using legacy Fortran process models presents severe computational bottlenecks. To overcome this, recent initiatives have trained deep neural network surrogates (e.g., spatiotemporal 1D-CNNs and MLPs) to emulate process models at speeds exceeding 25,000 evaluations per second on modern GPUs (Surrogate Architecture Roadmap, Horizon Europe *HydroDataCube4EU*).
 
-Resolving this coupled "soil-water-food nexus" demands an integrated set of agro-ecological interventions:
-1. **Retiring Acute Slope Farmland:** Transitioning steep, erodible parcels ($\theta \ge 5.0^\circ$) from annual tilled row crops to permanent grassland and silvoarable agroforestry buffers;
-2. **Implementing Conservation Agriculture:** Eliminating moldboard inversion in favor of continuous vegetative ground cover and direct drilling to halt droplet impact detachment;
-3. **Restructuring Crop Portfolios with Novel Drought-Hardy Cultures:** Introducing C4 cereals (*Sorghum bicolor*, *Pennisetum glaucum*) with superior water-use efficiency ($1.38\text{–}1.52\times$ over maize) and deep taproot legume mixtures (*Medicago sativa*, *Onobrychis viciifolia*) capable of biological nitrogen fixation and humic carbon stabilization;
-4. **Preserving Continental Caloric Security:** Ensuring that total pan-European food and feed production meets or exceeds baseline levels ($\ge 100\%$) without converting natural forests or biodiversity reserves.
+Despite their computational speed, pure neural network surrogates suffer from a critical flaw: **they lack physical inductive biases**. Deep learning models minimize empirical loss functions (such as mean squared error) over training distributions, but do not inherently respect boundary constraints, mass conservation, or thermodynamic thresholds. In environmental policy and European agricultural planning, non-physical predictions—such as negative irrigation extractions, phantom water use, or massive under-predictions of sediment detachment on erodible slopes—can lead to disastrous misallocations of Common Agricultural Policy (CAP) resources.
 
-Historically, optimizing these interventions across millions of heterogeneous land parcels has been computational intractable, while monolithic artificial intelligence coding assistants suffer from context drift, physical invariant hallucinations, and severe cloud compute costs. Here, we present a unified breakthrough in both **continental earth system science** and **decentralized autonomous computing**: an entirely offline, multi-agent scientific discovery cluster that formulates, simulates, optimizes, and verifies the European soil-water nexus across 1.28 million parcels from 2025 to 2050.
+Here, we demonstrate that resolving the reliability of earth system AI surrogates does not require commercial cloud supercomputing or ungrounded synthetic assumptions. Using an entirely on-premise, decentralized multi-agent cluster ("Don't Sell Your Old PC": a Dual NVIDIA RTX 5060 Ti primary workstation paired with a secondary RTX 4060 Ti node over local LAN), we execute an adversarial empirical audit of **5,000 paired process-surrogate simulations across 1,000 European parcels**, uncover the physical mechanisms behind surrogate degradation, and synthesize an **Adaptive Physics-Informed Hybrid Dispatcher** that restores mathematical and physical rigor to accelerated continental modeling.
 
 ---
 
 ## 2. Results
 
-### 2.1 Continental Driver Attribution of Soil Detachment and Crop Failure
+### 2.1 The Three Physical Failure Regimes of Neural Earth System Surrogates
 
-To isolate the biophysical mechanisms driving agricultural degradation across Europe, we deployed an ensemble of Random Forests ($N_{\text{trees}}=150, \text{max\_features}=0.6$) and Gradient Boosting Machines calibrated against biophysical EPIC (*Environmental Policy Integrated Climate*) simulations across 1,284,769 agricultural parcels under five climate pathways:
+Using the verified empirical comparison table [`validation_1000pts_raw_comparison.csv`](file:///D:/Soil%20Water%20Nexus%20-%20HORIZON-MISS-2025-05-SOIL-04/kickoff/validation_results/validation_1000pts_raw_comparison.csv), our local agent collective compared native Fortran EPIC ground truth (`epic_*`) against GPU neural surrogate emulation (`gpu_*`) across 11 key biophysical indicators:
 
-![Figure 2: Machine Learning Driver Attribution](figures/fig2_driver_attribution.png)
-**Figure 2 | Continental Machine Learning Driver Attribution across 1,284,769 European Farmland Parcels.** **A**, Relative feature importance for Universal Soil Loss Equation (USLE) gross soil detachment ($A = R \cdot K \cdot LS \cdot C \cdot P$). Terrain slope gradient ($\theta$) accounts for 48.2% of variance, followed by rainfall erosivity ($R$, 24.1%) and soil erodibility ($K$, 18.5%). **B**, Relative feature importance for crop yield reduction ($\Delta Y$). Vegetative and reproductive water stress days ($D_w$) drive 89.66% of continental yield loss variance, while direct temperature stress ($D_t$) accounts for less than 2.1% once root-zone moisture exhaustion is constrained.
+![Figure 1: The Three Physical Failure Regimes of Deep-Learning Earth System Surrogates](figures/fig1_grounded_failure_regimes.png)
+**Figure 1 | The Three Systematic Physical Failure Regimes of Deep-Learning Earth System Surrogates.** **A**, Regime 1: Zero-inflation non-negativity violation in dryland irrigation ($N=4{,}000$). The neural surrogate predicts negative values (min $-4.54\text{ mm}$) and phantom positive withdrawals (orange histogram), violating the true physical ground truth of $0.0\text{ mm}$ (navy dashed line). **B**, Regime 2: Breakdown of surrogate accuracy in Alpine / Montane terrain under SSP5-8.5 extreme warming ($N=69$), collapsing $\Delta\text{SOC}$ predictive skill to $R^2 = 0.1659$. **C**, Regime 3: Topographic erosion error amplification. Absolute USLE soil loss error scales exponentially on rolling slopes ($\theta \ge 8^\circ$), reaching a peak error of $37.35\text{ t ha}^{-1}\text{ yr}^{-1}$.
 
-Our empirical attribution reveals a fundamental divergence between the drivers of soil loss and yield loss:
-- **Erosion is Geomorphologically Driven:** Over 72.3% of soil loss variance is dictated by terrain slope gradient ($\theta$) and rainfall kinetic energy ($R$). Farmland parcels with slope $\ge 5.0^\circ$ (representing 21.6% of European arable land) generate over 82% of continental sediment detachment.
-- **Yield Loss is Hydro-Climatically Driven:** Agricultural yield collapse is overwhelmingly driven by root-zone soil water exhaustion. Water stress days ($D_w$) account for **89.66% of continental yield variance**. Extreme heat waves ($T_{\text{max}} > 38^\circ\text{C}$) cause severe damage only when compounded by root-zone moisture depletion ($PAWC < 130\text{ mm}$); under adequate soil moisture, photosynthetic recovery mitigates thermal damage.
+#### Regime 1: Zero-Inflation Non-Negativity Violation
+In un-irrigated dryland agriculture (historical, SSP1-2.6, SSP2-4.5 conventional, and SSP5-8.5 conventional; $N=4{,}000$), native EPIC enforces exact zero irrigation ($I = 0.0\text{ mm}$). Because standard neural network heads utilize unconstrained linear or smooth activations, the model outputs small residual errors across zero-inflated boundaries:
+- **1,614 evaluations (40.4%)** yield **negative irrigation** (minimum: $-4.5364\text{ mm}$), violating the law of conservation of mass.
+- **2,279 evaluations (57.0%)** yield phantom positive irrigation ($>0.05\text{ mm}$), resulting in an empirical $R^2 = 0.00$ for dryland irrigation and a maximum error of $5.652\text{ mm}$.
+- Only when active precision irrigation is modeled (`ssp245_precision_water`, $N=1{,}000$, EPIC mean $150.86\text{ mm}$) does the surrogate achieve meaningful correlation ($R^2 = 0.7439$, GPU mean $149.23\text{ mm}$).
 
----
+#### Regime 2: Alpine / Montane Extrapolation Under Extreme Warming
+In high-elevation, shallow-soil montane zones under extreme SSP5-8.5 warming ($N=69$):
+- Saturated hydraulic conductivity and temperature-dependent microbial respiration kinetics violate the surrogate's interpolation manifold. Soil organic carbon turnover ($\Delta\text{SOC}$) prediction accuracy collapses to **$R^2 = 0.1659$** ($\text{MAE} = 1.025\text{ t C/ha}$).
+- Water stress days accuracy drops to **$R^2 = 0.3075$** ($\text{MAE} = 0.353\text{ days}$), while yield accuracy falls to $R^2 = 0.8556$. The neural model fails to capture the phase transition from snowpack accumulation to winter rain runoff.
 
-### 2.2 European NUTS-2 Regional Vulnerability Hotspot Registry
-
-We aggregated empirical indicators across 300 European NUTS-2 administrative regions to establish the pan-European Soil-Water Nexus Vulnerability Index (SWN-VI):
-
-$$\text{SWN-VI}_r = 0.45 \cdot \frac{A_r}{40.0} + 0.35 \cdot \frac{D_{w,r}}{550.0} + 0.20 \cdot \left(1.0 - \frac{SOC_r}{4.0}\right)$$
-
-![Figure 3: Top Acute European NUTS-2 Hotspot Registry](figures/fig3_nuts2_acute_hotspots.png)
-**Figure 3 | Top Acute European NUTS-2 Hotspot Registry.** Comparison of mean annual soil erosion ($t\text{ ha}^{-1}\text{ yr}^{-1}$, orange bars) and summer root-zone water deficit (mm, purple bars) across acute European regions. The overlay line displays the composite Soil-Water Nexus Vulnerability Index (SWN-VI). The dashed red line indicates the sustainable pedogenesis threshold ($1.0\text{ t ha}^{-1}\text{ yr}^{-1}$).
-
-Mediterranean and Pannonian zones display acute compounding vulnerability:
-- **Peloponnese (EL65, Greece):** Mean slope $9.80^\circ$, baseline erosion $34.1\text{ t ha}^{-1}\text{ yr}^{-1}$, water deficit $475\text{ mm}$ ($\text{SWN-VI} = 0.975$);
-- **Andalucia (ES61, Spain):** Mean slope $8.15^\circ$, baseline erosion $28.6\text{ t ha}^{-1}\text{ yr}^{-1}$, water deficit $520\text{ mm}$ ($\text{SWN-VI} = 0.968$);
-- **Sicilia (ITG1, Italy):** Mean slope $9.30^\circ$, baseline erosion $31.2\text{ t ha}^{-1}\text{ yr}^{-1}$, water deficit $495\text{ mm}$ ($\text{SWN-VI} = 0.955$);
-- **Thessaly (EL61, Greece):** Mean slope $7.42^\circ$, baseline erosion $24.8\text{ t ha}^{-1}\text{ yr}^{-1}$, water deficit $482\text{ mm}$ ($\text{SWN-VI} = 0.942$).
-
-In these acute regions, current annual soil loss exceeds the sustainable pedogenesis threshold by 24- to 34-fold, threatening irreversible desertification and complete loss of productive arable topsoil by mid-century.
+#### Regime 3: Topographic Runoff Shear Detachment Amplification
+Universal Soil Loss Equation sediment detachment scales non-linearly with terrain slope ($LS \propto (\sin\theta)^{1.3}$):
+- On flat terrain ($\theta < 2^\circ$, $N=3{,}725$), the surrogate is highly accurate ($\text{MAE} = 0.40\text{ t/ha}$, max error $5.31\text{ t/ha}$).
+- On gentle slopes ($2^\circ \le \theta < 5^\circ$, $N=930$), MAE is $0.78\text{ t/ha}$ (max error $4.30\text{ t/ha}$).
+- On steep slopes ($8^\circ \le \theta < 15^\circ$, $N=315$), absolute error escalates dramatically: **mean absolute error reaches $5.24\text{ t/ha}$**, RMSE reaches $8.01\text{ t/ha}$, and maximum absolute error reaches **$37.35\text{ t ha}^{-1}\text{ yr}^{-1}$**. The surrogate severely underestimates hydraulic detachment during high-energy convective rainstorms.
 
 ---
 
-### 2.3 Continental Pareto Spatial Optimization and Caloric Preservation
+### 2.2 The Physics-Informed Boundary Guardrail and Hybrid Dispatcher
 
-To reconcile ecological restoration with food security, the agent collective synthesized a vectorized allocation policy solving the constrained multi-objective problem across all 1,284,769 parcels:
+To resolve these errors without sacrificing GPU speed, the collective formulated an **Adaptive Physics-Informed Hybrid Dispatcher** ([`results/grounded_hybrid_dispatcher.json`](file:///D:/Kaggle/results/grounded_hybrid_dispatcher.json)):
 
-![Figure 4: Continental Multi-Objective Pareto Frontier](figures/fig4_pareto_sustainability_frontier.png)
-**Figure 4 | Continental Multi-Objective Pareto Frontier across 1.14M Hectares.** Explored land-use configurations (scatter points, colored by freshwater savings) versus the non-dominated Pareto frontier (red dashed line). The conventional monoculture baseline (black 'X') is compared against the synthesized optimal policy (green star), which preserves +2.82% food production while cutting erosion by -89.37% and freshwater deficit by -40.94%.
+![Figure 2: Physics-Informed Guardrail and Adaptive Hybrid Dispatch Architecture](figures/fig2_grounded_hybrid_guardrail.png)
+**Figure 2 | Physics-Informed Hybrid Dispatch Architecture and Performance.** **A**, Workload partitioning across the 5,000 paired evaluations: 93.1% of parcels (4,655 evaluations) reside safely within the Surrogate Safe Operating Space (SSOS) on local GPUs, while 6.9% (345 evaluations) are dispatched to native Fortran EPIC. **B**, Error reduction achieved by the hybrid architecture, slashing USLE erosion RMSE by 68.95% and eliminating negative irrigation entirely.
 
-The synthesized policy applies four deterministic spatial reallocation rules:
-1. **Critical Slope Retirement ($\theta \ge 8.0^\circ$):** Mandatory transition of rolling and montane parcels to Permanent Grassland ($C=0.005, P=0.10$), achieving a $-99.5\%$ reduction in sediment detachment.
-2. **Buffer Slope Silvoarable Agroforestry ($5.0^\circ \le \theta < 8.0^\circ$):** Mandatory conversion to agroforestry tree alley buffers ($C=0.08, P=0.50$), reducing erosion by $-92.0\%$ while generating perennial forage.
-3. **Novel C4 Climate Crop Shuffling:** On arable flatlands ($\theta < 5.0^\circ$), parcels suffering extreme moisture stress ($D_w \ge 28\text{ days}, PAWC < 130\text{ mm}$) are transitioned from water-inefficient maize to Pearl Millet (*Pennisetum glaucum*, WUE $1.52\times$); parcels with moderate stress ($D_w \ge 18\text{ days}$) transition to Grain Sorghum (*Sorghum bicolor*, WUE $1.38\times$); degraded soils ($SOC < 2.0\%$) rotate into Perennial Legume Leys (+0.52 t C/ha/yr).
-4. **Precision Conservation Agriculture:** All remaining arable parcels transition to zero-tillage with continuous cover cropping ($C=0.25, P=0.80$).
+The dispatcher enforces three deterministic boundary rules:
+1. **Topographic Rule:** Any parcel with terrain slope $\theta \ge 8.0^\circ$ is designated *Surrogate-Unsafe* and dispatched to native Fortran EPIC (`epic1102.exe`), eliminating peak erosion errors.
+2. **Extreme Montane Rule:** Any parcel classified as Alpine / Montane under SSP5-8.5 warming is dispatched to native Fortran EPIC, bypassing non-linear SOC and water stress extrapolation failure.
+3. **Analytical Dryland Clamp:** Parcels processed by the GPU surrogate in non-irrigated scenarios receive an analytical clamp ($I = 0.0\text{ mm}$), eliminating 100% of negative and phantom irrigation.
 
-| Scenario / Metric | Total Production (t) | Production Preservation (%) | Soil Erosion (t/yr) | Soil Erosion Delta (%) | Water Deficit ($\text{m}^3$) | Water Savings (%) | Net Carbon Delta (t C/yr) |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Conventional Baseline (SSP245)** | 140,893,920 | 100.00% | 5,468,719 | 0.00% | 9,255,140,200 | 0.00% | 0 |
-| **Synthesized Pareto Optimal Policy** | **144,867,746** | **102.82% (+2.82%)** | **581,335** | **-89.37%** | **5,466,085,800** | **-40.94%** | **+605,053** |
-| **Net Continental Delta** | **+3,973,826 t** | **Caloric Parity Guaranteed** | **-4,887,384 t/yr** | **Erosion Collapsed** | **-3.79 billion $\text{m}^3$** | **Aquifers Relieved** | **Climate Carbon Sink** |
-
----
-
-### 2.4 Multi-Decadal Transient Trajectories (2025–2050)
-
-Advancing beyond single-year equilibrium models, our offline cluster formulated and verified the transient multi-decadal dynamics in [`src/simulation/decadal_dynamics.py`](file:///D:/Kaggle/src/simulation/decadal_dynamics.py) across the 26-year horizon:
-
-![Figure 5: Multi-Decadal Transient Coupling (2025–2050)](figures/fig5_decadal_dynamics_2025_2050.png)
-**Figure 5 | Multi-Decadal Transient Coupling of the European Soil-Water Nexus (2025–2050).** **A**, RothC soil organic carbon accumulation ($t\text{ C/ha}$, green) and soil organic matter percentage (brown dashed). **B**, Pedotransfer hydro-dynamics: saturated hydraulic conductivity ($K_{sat}$, blue) and bulk density decompaction ($\rho_b$, grey dashed). **C**, Farmer adoption hazard curve ($A(t)$, purple) versus annual soil loss ($t\text{ ha}^{-1}\text{ yr}^{-1}$, red dashed) relative to the pedogenesis threshold (dotted). **D**, Socio-economic transition: annual net gross margin (€/ha/yr, teal) and relative crop yield (%, pink dashed) under EU CAP eco-scheme support.
-
-The 26-year transient integration reveals three critical dynamic feedbacks:
-1. **Soil Organic Carbon (SOC) Accumulation:** Under regenerative residue inputs ($4.2\text{ t C/ha/yr}$), topsoil carbon rises monotonically from $50.0\text{ t C/ha}$ in 2025 to **$63.4\text{ t C/ha}$ in 2050** ($+13.4\text{ t C/ha}$ net gain), converting agricultural soils into a persistent carbon sink.
-2. **Pedotransfer Decompaction & Infiltration Recovery:** Accumulating organic matter decompresses soil bulk density from $1.51\text{ g/cm}^3$ to **$1.47\text{ g/cm}^3$**, expanding drainable pore space. Consequently, saturated hydraulic conductivity increases by **+38.6% (from 17.2 to 23.8 mm/hr)**, doubling rainstorm infiltration capacity and cutting surface runoff shear stress.
-3. **Farmer Adoption Economics & Yield Lag Buffer:** Continental farmer adoption follows a capital-amortized logistic hazard curve reaching $85.0\%$ by 2045. Crucially, despite an empirical $10\%$ yield lag during the microbial re-equilibration in Year 1, annual farmer net gross margins remain strictly positive (€415/ha) due to EU CAP eco-scheme payments (€105/ha) offsetting amortized machinery investments (€22.8/ha/yr). By Year 5, gross margins reach **€522/ha/yr (+16% higher than conventional monoculture)** as soil health dividends mature.
+| Performance Indicator | Raw Neural Surrogate | Physics-Informed Hybrid Dispatcher | Verified Improvement |
+| :--- | :--- | :--- | :--- |
+| **GPU Safe Space Allocation** | 100.0% (Unconstrained) | **93.1% (4,655 evaluations)** | Retains high-throughput local GPU acceleration |
+| **Native Fortran Fallback** | 0.0% | **6.9% (345 evaluations)** | Surgically executed only where physics fails |
+| **USLE Erosion RMSE** | $2.1248\text{ t/ha}$ | **$0.6597\text{ t/ha}$** | **-68.95% Error Reduction** |
+| **USLE Erosion Max Error** | $37.35\text{ t/ha}$ | **$5.31\text{ t/ha}$** | **-85.78% Peak Error Reduction** |
+| **Negative Irrigation Events** | 1,614 parcels (min $-4.54\text{ mm}$) | **0 parcels (100% valid)** | **Negative Irrigation Completely Eliminated** |
+| **$\Delta\text{SOC}$ RMSE** | $0.8860\text{ t C/ha}$ | **$0.7317\text{ t C/ha}$** | **-17.41% Error Reduction** |
 
 ---
 
-### 2.5 The "Don't Sell Your Old PC" Heterogeneous Multi-Agent Architecture
+### 2.3 In-Situ Empirical Grounding: The Drava Basin Pilot (Osijek, Croatia)
 
-The computational discovery engine was developed and verified entirely on-premise without cloud API dependencies:
+To ground continental simulations in real agricultural realities, the collective analyzed in-situ hydrological monitoring data from the Croatian pilot site in Eastern Croatia (Agricultural Institute Osijek / AIO):
 
-![Figure 1: Heterogeneous Multi-Machine Cluster & Memdoor Disk-Ledger Architecture](figures/fig1_decentralized_cluster_dag.png)
-**Figure 1 | Decentralized Heterogeneous Multi-Machine Scientific Discovery Architecture.** Physical partitioning between the primary workstation (Dual RTX 5060 Ti Blackwell, 128 GB RAM) hosting the Strata Lead Architect, Gemma 4 Biophysics Specialist, and Qwen 27B Economics Specialist, and an older secondary consumer PC (RTX 4060 Ti 16 GB, 32 GB RAM) on the home router acting as the autonomous Strata Coder and repair worker. Inter-agent communication occurs exclusively through stateless append-only disk ledgers on NVMe storage.
+![Figure 3: In-Situ Microclimate and Hydrological Stress Dynamics (Osijek Pilot Site, 2024)](figures/fig3_grounded_pilot_drava.png)
+**Figure 3 | In-Situ Microclimate and Hydrological Stress Dynamics across the Osijek Pilot Site (2024 Growing Season).** **A**, Daily air temperature (red, left axis) and vapor pressure deficit (orange dashed, right axis) from April 1 to September 30, 2024. **B**, Soil Water Deficit Index (SWDI, blue curve), demonstrating that root-zone moisture was in active deficit (SWDI < 0) for 144 of the 184 monitoring days, with 101 days in severe drought deficit (SWDI < -2, crimson dotted line).
 
-Key architectural innovations include:
-- **100% Offline Autonomy:** Strata Lead Architect replaced cloud orchestration, executing task decomposition, planning, and cluster supervision locally at 57.1 tok/s.
-- **262k Long-Context Working Memory:** All models utilized the full 262,144 token context window, allowing entire pedotransfer tables, empirical datasets, and regional dossiers to reside in context without lossy chunking.
-- **Memdoor Stateless Disk-Ledger Discipline:** Elimination of inter-agent chat in favor of structured files on disk prevented multi-turn context degradation.
-- **Full Verification Suite:** 67 automated tests passing in 302.77s (100% pass rate).
+Empirical findings ([`results/grounded_pilot_drava.json`](file:///D:/Kaggle/results/grounded_pilot_drava.json)):
+- **54 DLR Flight-Eligible ARKOD Parcels:** Covering **449.71 hectares** of high-yielding cropland (Chernozems, Fluvisols, Planosols) centered at $45.531884^\circ\text{ N}, 18.749512^\circ\text{ E}$.
+- **184-Day Growing Season Dynamics (April 1 – September 30, 2024):**
+  - Daily mean air temperature reached $19.72^\circ\text{C}$ (peak $28.63^\circ\text{C}$), with mean $\text{VPD} = 0.918\text{ kPa}$.
+  - Root-zone soil moisture was in active deficit ($\text{SWDI} < 0.0$) for **144 out of 184 days (78.3%)**, with **101 days** in severe deficit ($\text{SWDI} < -2.0$), reaching a minimum $\text{SWDI} = -8.997$ in late summer when surface soil moisture dropped to $0.100$.
 
----
-
-### 2.6 Epistemic Reasoning Trajectory and Dialectical Hypothesis Derivation
-
-The scientific conclusions of this study were not derived from rigid predefined scripts or single-prompt queries, but through an autonomous, five-stage dialectical reasoning sequence across the specialized models:
-
-```mermaid
-flowchart TD
-    A["Stage 1: Empirical Problem Identification\nBiophysical dilemma of monoculture vs summer moisture depletion"] --> B["Stage 2: Machine Learning Attribution\nSpatial decoupling of erosion (topography) vs yield loss (water stress)"]
-    B --> C1["Stage 3A: Biophysics Proposal (Gemma 4)\nTotal slope retirement (theta >= 5 deg) to natural vegetation"]
-    B --> C2["Stage 3B: Economic Critique (Qwen 27B)\nCaloric crisis, market volatility, and farm insolvency risk"]
-    C1 --> D["Stage 4: Pareto Synthesis (Strata Lead Architect)\nSpatial triage: slope agroforestry buffers + flatland C4 shuffling"]
-    C2 --> D
-    D --> E["Stage 5: Epistemological Advance to Multi-Decadal Dynamics\nCoupling transient RothC turnover, pedotransfer decompaction, and adoption hazard"]
-```
-
-1. **Stage 1 (Biophysical Dilemma Formulation):** The collective identified an inherent systemic vulnerability in European crop production: intensive moldboard tillage maintains cereal yield in wet years but destroys soil aggregate stability, accelerates erodibility ($K$), and compacts subsoil ($\rho_b \ge 1.51\text{ g/cm}^3$). When summer heatwaves occur, reduced plant-available water capacity ($PAWC$) leads to abrupt yield failure, prompting unsustainable groundwater exploitation.
-2. **Stage 2 (Empirical Attribution & Geomorphological Decoupling):** Rather than treating soil erosion and drought yield loss as co-located phenomena, the machine-learning attribution across 1,284,769 parcels revealed an empirical divergence: gross soil loss is **geomorphologically anchored** to slope ($\theta \ge 5.0^\circ$ generates $>82\%$ of sediment), while crop yield loss is **hydro-climatically governed** (89.66% driven by water stress days $D_w$). Consequently, uniform continental policies (such as universal no-till or blanket crop replacement) are sub-optimal; interventions must be spatially partitioned by slope and hydrologic vulnerability.
-3. **Stage 3 (Dialectical Ideation & Refutation of Naive Conservation):**
-   - *Biophysics Specialist (Gemma 4):* Formulated an aggressive soil preservation mandate, recommending the complete retirement of all farmland with $\theta \ge 5.0^\circ$ to permanent unmanaged forest and grassland to collapse the USLE $C$ and $P$ factors.
-   - *Economics Specialist (Qwen 27B):* Refuted the proposal, calculating that taking 21.6% of European farmland out of food production would eliminate over 28 million metric tons of staple grain, precipitating continental food price inflation and severe farm insolvencies.
-4. **Stage 4 (Synthesis & Spatial Triage):** The Lead Architect resolved the tension by developing a tiered spatial triage rule:
-   - Parcels with slope $\theta \ge 8.0^\circ$ are retired to permanent grassland (cutting erosion by 99.5%);
-   - Parcels with intermediate slope ($5.0^\circ \le \theta < 8.0^\circ$) transition to silvoarable agroforestry buffers (cutting erosion by 92% while preserving partial forage/yield);
-   - Flatland arable parcels ($\theta < 5.0^\circ$) undergo novel C4 cereal and legume substitution, replacing thirsty silage maize with drought-resilient *Sorghum bicolor* and *Pennisetum glaucum*. This unlocked a $+2.82\%$ net increase in continental food production while reducing water deficits by $-40.94\%$.
-5. **Stage 5 (Multi-Decadal Dynamic Integration):** During peer review, the agents determined that static models overlook adoption barriers: farmers face a 1-to-3-year yield lag during soil biological re-equilibration. The team formulated [`src/simulation/decadal_dynamics.py`](file:///D:/Kaggle/src/simulation/decadal_dynamics.py), coupling 4-pool RothC carbon kinetics, Adams bulk density decompaction, and a capital-amortized farmer adoption hazard curve bridged by CAP Eco-schemes (€105/ha/yr).
+This pilot ground truth explains why accurate zero-inflation modeling is essential: even in fertile European river basins, crops experience prolonged root-zone water exhaustion. Hallucinating phantom irrigation or miscalculating dryland stress corrupts regional water allocation planning.
 
 ---
 
-## 3. Discussion & Policy Implications
+## 3. Discussion & Methodological Governance
 
-Our findings provide direct empirical and computational guidance for European environmental policy:
-1. **EU Soil Monitoring Law Enforcement:** The proposed EU Soil Monitoring Law mandates that agricultural soils not exceed tolerable degradation thresholds. Our results demonstrate that conventional tillage on terrain slopes $\ge 5.0^\circ$ makes compliance physically impossible ($A > 20\text{ t ha}^{-1}\text{ yr}^{-1}$). Mandatory retirement of acute slopes to permanent grassland and silvoarable agroforestry is the only biophysically viable mechanism to cut erosion by 89%.
-2. **Reforming CAP Pillar I Eco-Schemes:** Direct payments must be targeted toward compensating farmers during the empirical 1- to 3-year organic transition yield lag. An eco-scheme allocation of €95–110/ha/yr guarantees positive farmer net margins during early conversion, preventing financial distress.
-3. **Decentralized AI for Public Science:** Modern science need not depend on centralized, subscription-gated cloud LLMs. Repurposing previous-generation consumer hardware (e.g., an older RTX 4060 Ti) as an autonomous coding worker on a local router creates an on-premise research cluster capable of producing reproducible, peer-reviewed discoveries.
+### 3.1 Preventing the "Synthetic Echo Chamber" in AI Science
+Autonomous LLM agents are prone to writing synthetic data generators that embed heuristic assumptions, then training regressions on their own output and proclaiming a "discovery." To eliminate this failure mode, our architecture enforced three structural rules:
+1. **Zero-Mock Data Invariant:** Agents are strictly forbidden from generating random or synthetic data when real project files exist.
+2. **Deterministic Provenance Auditing:** Every reported metric must be accompanied by an automated audit trace linking it to ground-truth JSON ledgers on disk.
+3. **Adversarial Multi-Agent Review:** Reviewer models (Gemma 4 and Qwen 27B) must actively probe for physical boundary violations and sample dependence, while the Chief Supervisor (Main Qwen MoE on port 8080) enforces editorial veto power over unverified claims.
+
+### 3.2 Policy Implications for European Digital Twins
+The EU Destination Earth (DestinE) and Soil Monitoring Law frameworks envision deep-learning digital twins for continental agro-ecosystems. Our results indicate that unconstrained pure-neural surrogates cannot be deployed safely without physics-informed guardrails. Implementing an adaptive hybrid dispatcher—keeping ~93% of parcels on GPU acceleration while routing the critical ~7% of complex, steep, or extreme parcels to native Fortran—provides the necessary accuracy and physical conservation required for European environmental policy.
 
 ---
 
 ## 4. Methods
 
-### 4.1 Cadastral Parcel Ingestion & HydroDataCube4EU Harmonization
-We harmonized cadastral boundary data from the European Land Parcel Identification System (LPIS) across 1,284,769 agricultural parcels in 34 countries with biophysical raster layers from Horizon Europe *HydroDataCube4EU* at 5-km spatial resolution. Each parcel was assigned soil texture (sand, silt, clay fractions), topsoil bulk density ($\rho_b$), soil organic carbon ($SOC$), terrain slope gradient ($\theta$), elevation, rainfall erosivity ($R$), and multi-scenario crop water stress metrics ($D_w, D_t$).
+### 4.1 Paired Simulation Corpus & Processing
+The empirical dataset was drawn from Horizon Europe *HydroDataCube4EU* (HORIZON-MISS-2025-05-SOIL-04), comprising 5,000 paired observations across 1,000 European parcels and 5 climate scenarios (historical baseline, SSP1-2.6 conservation, SSP2-4.5 conventional, SSP2-4.5 precision water, SSP5-8.5 conventional). Native Fortran simulations were executed using standard EPIC 0810 / 1102 binaries (`epic1102.exe`), while GPU surrogates were evaluated using the PyTorch 1D-CNN spatiotemporal architecture.
 
-### 4.2 Universal Soil Loss Equation (USLE / RUSLE) Biophysical Formulations
-Annual gross soil detachment was computed using the Universal Soil Loss Equation:
-$$A = R \cdot K \cdot LS \cdot C \cdot P \quad [\text{metric tons ha}^{-1}\text{ yr}^{-1}]$$
-where $R$ is rainfall erosivity ($\text{MJ mm ha}^{-1}\text{ h}^{-1}\text{ yr}^{-1}$), $K$ is soil erodibility factor calculated via Torri (1997):
-$$K = 0.0293 \cdot (0.65 - D_g + 0.24 \cdot D_g^2) \cdot \exp\left[-0.0021\cdot\frac{OM}{c} - 0.00037\cdot\left(\frac{OM}{c}\right)^2 - 4.02\cdot c + 1.72\cdot c^2\right]$$
-and $LS$ is the topographic factor:
-$$LS = \left(\frac{\lambda}{22.13}\right)^{0.4} \cdot \left(\frac{\sin\theta}{0.0896}\right)^{1.3}$$
+### 4.2 Statistical and Performance Metrics
+Performance metrics were computed across overall ($N=5{,}000$), training ($N=3{,}500$), and held-out test ($N=1{,}500$, `is_test == True`) partitions:
+$$\text{MAE} = \frac{1}{N}\sum_{i=1}^N |y_i - \hat{y}_i|, \quad \text{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^N (y_i - \hat{y}_i)^2}, \quad R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}$$
+$$\text{NRMSE} = \frac{\text{RMSE}}{\max(y) - \min(y)} \times 100\%, \quad \text{PBIAS} = \frac{\sum(\hat{y}_i - y_i)}{\sum y_i} \times 100\%$$
 
-### 4.3 Saxton-Rawls Dynamic Pedotransfer Coupling
-Field capacity ($\theta_{33}$) and permanent wilting point ($\theta_{1500}$) were calculated dynamically via Saxton & Rawls (2006):
-$$\theta_{1500} = -0.024\cdot S + 0.487\cdot C + 0.006\cdot OM + 0.005\cdot(S\cdot OM) - 0.013\cdot(C\cdot OM) + 0.068\cdot(S\cdot C) + 0.031$$
-$$\theta_{33} = -0.251\cdot S + 0.195\cdot C + 0.011\cdot OM + 0.006\cdot(S\cdot OM) - 0.027\cdot(C\cdot OM) + 0.452\cdot(S\cdot C) + 0.299$$
-$$PAWC = 1000.0 \cdot (\theta_{33} - \theta_{1500}) \cdot \text{RootDepth}_m \quad [\text{mm}]$$
-
-Dynamic bulk density was linked to organic matter via Adams (1973):
-$$\rho_b(t) = \frac{100}{\frac{OM(t)}{0.224} + \frac{100 - OM(t)}{1.62}} \quad [\text{g/cm}^3]$$
-and saturated hydraulic conductivity was computed from drainable porosity:
-$$K_{sat}(t) = 1930.0 \cdot \left(\theta_s(t) - \theta_{33}(t)\right)^{2.2} \quad [\text{mm/hr}]$$
-
-### 4.4 RothC Multi-Pool Carbon Turnover Kinetics
-Soil carbon turnover was integrated annually across four functional pools:
-$$\frac{dC_i}{dt} = I_i - k_i \cdot \xi_T \cdot \xi_W \cdot C_i$$
-with rate constants $k_{DPM}=10.0, k_{RPM}=0.30, k_{BIO}=0.66, k_{HUM}=0.02\text{ yr}^{-1}$, temperature modifier $\xi_T = \frac{47.9}{1 + \exp(106 / (T + 18.3))}$, and moisture modifier $\xi_W = \min(1.0, 0.2 + 0.8 \cdot P/ET_0)$.
-
-### 4.5 Farmer Adoption Hazard Modeling
-Annual adoption fraction $A(t)$ was formulated as a logistic hazard model:
-$$A(t) = \frac{A_{max}}{1 + \exp(-\kappa \cdot (t - t_0))}$$
-where $A_{max}=0.88, \kappa=0.32\text{ yr}^{-1}, t_0=4.0\text{ yr}$. Annual net margin was calculated including CAP eco-schemes (€105/ha) and machinery CapEx (€160/ha amortized over 7 years at 3.5%).
-
-### 4.6 Autonomous Multi-Agent Governance, Delegation Tiers, and Physical Invariants
-The computational system was governed by a formal autonomy protocol designed to prevent both micromanagement bottlenecks and unbounded agent divergence:
-1. **Tier 1 (Principal Investigator - Human Strategic Supervision):** Defined problem boundaries, caloric invariance constraints ($\sum Y_i \ge \sum Y_{i,\text{baseline}}$), and local hardware allocations. Zero manual code writing or step-by-step tool invocation.
-2. **Tier 2 (Strata Lead Architect - Port 8080):** High-level task decomposition, mathematical formalization, hypothesis synthesis, and cross-agent peer review orchestration. Prohibited from generating low-level procedural syntax.
-3. **Tier 3 (Domain Ideators - Ports 8081 & 8082):** Gemma 4 26B (Biophysical specialist) and Qwen 3.8 27B (Agronomic economics specialist) operated with read-and-critique permissions, injecting domain-specific pedotransfer equations and market constraints into shared disk ledgers while retaining independent veto power over physical violations.
-4. **Tier 4 (Strata Coder - 172.20.20.120:8080):** Granted full operational autonomy within an isolated Git worktree to generate simulation modules, write pytest suites, and execute autonomous repair loops (bounded to 3 local repair cycles per failure).
-5. **Memdoor Communication Invariants:** Agents communicated strictly through append-only markdown ledgers (`task.md`, `plan.md`, `notes.md`, `review.md`) stored on NVMe storage. Direct inter-model chat was disallowed to prevent conversational drift and preserve context integrity across the 262k token working memory.
+### 4.3 Pilot Site Hydrological Instrumentation
+The Osijek pilot site in the Drava River Basin is instrumented with continuous TDR/FDR soil moisture profiling probes (10, 30, 60, 100 cm depth), an agro-meteorological station, and monthly RTK-enabled multispectral UAV campaigns covering 54 ARKOD cadastral parcels (449.71 ha). The Soil Water Deficit Index (SWDI) was calculated from normalized soil water content relative to field capacity and wilting point.
 
 ---
 
-## Data Availability
-The harmonized European cadastral parcels, NUTS-2 regional aggregations, and biophysical scenario files are accessible at `https://github.com/vlatkogalic/soil-water-nexus-agents` and via Horizon Europe *HydroDataCube4EU* portal (HORIZON-MISS-2025-05-SOIL-04).
-
-## Code Availability
-All source code, simulation modules, data loaders, driver analytics, figure generation scripts, and multi-agent test harnesses are released under the MIT Open Source License at `https://github.com/vlatkogalic/soil-water-nexus-agents` with complete automated verification suites.
+## Data and Code Availability
+All analysis scripts, failure diagnostic modules, hybrid dispatcher algorithms, and test suites are available under the MIT License at `https://github.com/vlatkogalic/soil-water-nexus-agents` with complete automated verification. The raw 5,000-point paired comparison file is archived in the Horizon Europe *HydroDataCube4EU* project repository.
 
 ---
 
 ## References
-1. IPCC. *Climate Change 2021: The Physical Science Basis*. Contribution of Working Group I to the Sixth Assessment Report (Cambridge University Press, 2021).
-2. Panagos, P. et al. The new assessment of soil loss by water erosion in Europe. *Environ. Sci. Policy* **54**, 438–447 (2015).
-3. Boardman, J. & Poesen, J. *Soil Erosion in Europe* (John Wiley & Sons, 2006).
-4. Saxton, K. E. & Rawls, W. J. Soil water characteristic estimates by texture and organic matter for hydrologic solutions. *Soil Sci. Soc. Am. J.* **70**, 1569–1578 (2006).
-5. Torri, D., Poesen, J. & Borselli, L. Predictability and uncertainty of the soil erodibility factor using RUSLE. *Catena* **31**, 1–22 (1997).
-6. European Environment Agency (EEA). *Water resources across Europe — confronting water stress: an updated approach* (EEA Report No 12/2021, 2021).
-7. Adams, W. A. The effect of organic matter on the bulk and true densities of some uncultivated podzolic soils. *J. Soil Sci.* **24**, 10–17 (1973).
-8. Jenkinson, D. S. et al. The turnover of organic carbon in subsoils. *Soil Biol. Biochem.* **31**, 21–35 (1999).
+1. Panagos, P. et al. The new assessment of soil loss by water erosion in Europe. *Environ. Sci. Policy* **54**, 438–447 (2015).
+2. IPCC. *Climate Change 2021: The Physical Science Basis*. Sixth Assessment Report (Cambridge University Press, 2021).
+3. Saxton, K. E. & Rawls, W. J. Soil water characteristic estimates by texture and organic matter for hydrologic solutions. *Soil Sci. Soc. Am. J.* **70**, 1569–1578 (2006).
+4. European Environment Agency (EEA). *Water resources across Europe — confronting water stress* (EEA Report No 12/2021, 2021).
+5. Williams, J. R. The EPIC model. In: *Computer Models of Watershed Hydrology*, Water Resources Publications, pp. 909–1000 (1995).

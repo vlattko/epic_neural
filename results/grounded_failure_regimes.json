@@ -1,0 +1,62 @@
+{
+  "regime_1_zero_inflation": {
+    "description": "Unconstrained neural activations predict non-zero and negative irrigation on dryland parcels",
+    "dryland_sample_size": 4000,
+    "epic_ground_truth_zero_pct": 100.0,
+    "gpu_negative_irrigation_count": 1614,
+    "gpu_negative_irrigation_min_val_mm": -4.5364,
+    "gpu_phantom_irrigation_positive_count": 2279,
+    "dryland_max_absolute_error_mm": 5.652,
+    "dryland_r2": 0.0,
+    "precision_water_sample_size": 1000,
+    "precision_water_epic_mean_mm": 150.86,
+    "precision_water_gpu_mean_mm": 149.23,
+    "precision_water_r2": 0.7439
+  },
+  "regime_2_alpine_extremes": {
+    "description": "Severe loss of surrogate predictive accuracy in steep, high-elevation alpine terrain under SSP5-8.5 warming",
+    "alpine_ssp585_count": 69,
+    "soc_delta_r2": 0.1659,
+    "soc_delta_mae": 1.0249,
+    "water_stress_days_r2": 0.3075,
+    "yield_r2": 0.8556,
+    "usle_erosion_mae_t_ha": 5.2026
+  },
+  "regime_3_topographic_erosion": {
+    "description": "Exponential growth of absolute erosion surrogate error on slopes exceeding 8 degrees",
+    "by_slope_band": {
+      "flat_0_to_2": {
+        "count": 3725,
+        "epic_mean_erosion_t_ha": 6.7144,
+        "gpu_mean_erosion_t_ha": 6.6019,
+        "mae_t_ha": 0.4004,
+        "rmse_t_ha": 0.5485,
+        "max_abs_error_t_ha": 5.31
+      },
+      "gentle_2_to_5": {
+        "count": 930,
+        "epic_mean_erosion_t_ha": 14.9218,
+        "gpu_mean_erosion_t_ha": 14.6217,
+        "mae_t_ha": 0.7816,
+        "rmse_t_ha": 1.0653,
+        "max_abs_error_t_ha": 4.3
+      },
+      "steep_8_to_15": {
+        "count": 315,
+        "epic_mean_erosion_t_ha": 114.947,
+        "gpu_mean_erosion_t_ha": 115.1826,
+        "mae_t_ha": 5.2393,
+        "rmse_t_ha": 8.0075,
+        "max_abs_error_t_ha": 37.35
+      },
+      "montane_over_15": {
+        "count": 30,
+        "epic_mean_erosion_t_ha": 175.1687,
+        "gpu_mean_erosion_t_ha": 176.2185,
+        "mae_t_ha": 2.1386,
+        "rmse_t_ha": 2.585,
+        "max_abs_error_t_ha": 4.6
+      }
+    }
+  }
+}

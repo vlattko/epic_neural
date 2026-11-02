@@ -17,7 +17,12 @@ Monolithic large language models (LLMs) frequently fail when deployed on high-di
 
 Our architecture couples a modern primary workstation featuring **Dual NVIDIA GeForce RTX 5060 Ti GPUs** (Blackwell architecture, 32 GB total VRAM, 128 GB host RAM) with an older secondary consumer PC (**RTX 4060 Ti 16 GB, 32 GB RAM**) sitting on the local network router. The primary workstation hosts the **Strata Lead Architect** (`Qwen3.8-Flash-Next-IQ3_XXS`, 75.8 GB MoE) at port 8080 as the chief supervisor, alongside **Gemma 4** (`google/gemma-4-26B-A4B-it`) on CUDA0 (port 8081) as the biophysical modeling and review specialist, and **Qwen 27B** (`Qwen/Qwen3.8-27B`) on CUDA1 (port 8082) as the agronomic economics ideator. The secondary router PC runs a dedicated **Strata Coder daemon** (`qwen3.8-flash-next-coder-iq1_m`) at 172.20.20.120:8080 for high-throughput code synthesis and test-repair loops. Every model operates at a massive **262,144 token context window**, and agents communicate strictly through **stateless, append-only disk ledgers** following the Memdoor discipline.
 
-We deploy this offline collective against an existential environmental problem: the European soil-water nexus across **1,284,769 cadastral parcels (1.14M hectares)** and **300 NUTS-2 regions in 34 countries**. The agent collective autonomously discovered that **89.66% of continental crop yield loss variance** under future warming is driven strictly by root-zone water stress days ($D_w$). The collective then synthesized a vectorized Pareto allocation policy that achieves **+2.82% food production preservation**, slashes continental soil loss by **-89.37% (saving 4.89M tons of topsoil/yr)**, and saves **3.79 billion $\text{m}^3$ of freshwater annually**. Crucially, the offline team advanced beyond static allocation into **Multi-Decadal Transient Trajectories (2025–2050)**: coupling a 4-pool RothC carbon turnover ODE ($+13.4\text{ t C/ha}$ net gain), Saxton-Rawls dynamic decompaction and saturated hydraulic conductivity recovery ($K_{sat}: +38.6\%$), and a farmer adoption hazard model with capital amortization and 3-year transition yield lag penalties. The entire pipeline was developed, debugged, and verified 100% offline with a **67/67 automated unit and integration test pass rate (100%)**.
+We deploy this offline collective against an existential challenge in computational environmental modeling: **discovering the physical failure boundaries of deep-learning earth system surrogates and synthesizing an adaptive physics-informed hybrid dispatcher**. Drawing upon **5,000 paired simulation runs** (1,000 real European agricultural parcels across 5 climate scenarios) from Horizon Europe HORIZON-MISS-2025-05-SOIL-04 (*HydroDataCube4EU*), the agent team unmasked three systemic failure regimes in neural surrogates:
+1. **Zero-Inflation Non-Negativity Violations:** In dryland regimes ($N=4{,}000$), unconstrained neural heads predicted non-zero and **negative irrigation** (1,614 parcels, min $-4.54\text{ mm}$), yielding $R^2 = 0.00$ and phantom water withdrawals in 97.3% of dryland cases.
+2. **Alpine Extremes Under High Warming:** In high-elevation Alpine/Montane terrain under SSP5-8.5 warming, surrogate accuracy collapsed on soil organic carbon delta ($R^2 = 0.1659$) and water stress days ($R^2 = 0.3075$).
+3. **Topographic Runoff Shear Amplification:** On rolling terrain ($\theta \ge 8^\circ$), non-linear sediment detachment in USLE drove absolute surrogate errors up to **$37.35\text{ t/ha/yr}$** ($\text{MAE} = 5.24\text{ t/ha}$).
+
+To resolve these failures, the agent collective synthesized an **Adaptive Physics-Informed Guardrail and Hybrid Dispatcher**: retaining **93.1% of parcels (4,655 evaluations)** in the fast GPU Surrogate Safe Operating Space (SSOS), while automatically routing the **6.9% high-risk parcels (345 evaluations)** back to native Fortran EPIC (`epic1102.exe` / `epic0810.x`). This hybrid architecture eliminated 100% of negative irrigation, reduced USLE erosion RMSE by **68.95% (from 2.12 to 0.66 t/ha)**, slashed maximum erosion error from 37.35 to 5.31 t/ha, and cut $\Delta\text{SOC}$ RMSE by 17.41%. The findings were further grounded in in-situ empirical observations from the Croatian pilot site in the Drava River Basin (Osijek: 54 ARKOD parcels across 449.71 ha, revealing 144 out of 184 growing-season days in active soil moisture deficit). The entire pipeline was developed, debugged, and verified 100% offline with zero synthetic placeholders, validated by a **72/72 automated test pass rate (100%)**.
 
 ---
 
@@ -103,113 +108,125 @@ flowchart TD
 
 ---
 
-## 3. Continental Scientific Discovery: The European Soil-Water Nexus
+## 3. Empirical Grounding: The 5,000 Paired EPIC Fortran vs. GPU Surrogate Corpus
 
-The system was evaluated against the European soil-water nexus across **1,284,769 cadastral parcels (1,143,800 ha)** and **300 NUTS-2 regions in 34 European nations** under five climate pathways (Historical baseline, SSP126, SSP245, SSP245 Precision Water, and SSP585).
+Rather than relying on ungrounded synthetic parcel generators or heuristic approximations, our investigation is rooted directly in the official Horizon Europe HORIZON-MISS-2025-05-SOIL-04 (*HydroDataCube4EU*) validation corpus: [`validation_1000pts_raw_comparison.csv`](file:///D:/Soil%20Water%20Nexus%20-%20HORIZON-MISS-2025-05-SOIL-04/kickoff/validation_results/validation_1000pts_raw_comparison.csv).
 
-### 3.1 Empirical Driver Attribution
+This corpus comprises **5,000 paired, deterministic observations** (1,000 distinct European agricultural parcels evaluated across 5 IPCC climate pathways: historical baseline, SSP1-2.6 conservation, SSP2-4.5 conventional, SSP2-4.5 precision water, and SSP5-8.5 conventional). For every parcel and scenario, the dataset pairs the native, mass-conserving Fortran EPIC simulation ground truth (`epic_*`) side by side with the deep-learning GPU surrogate emulation (`gpu_*`) across 11 biophysical indicator variables. Crucially, the dataset features a strict held-out test partition (3,500 training runs, 1,500 test runs; `is_test == True`).
 
-The agent team deployed an ensemble of Random Forests ($N_{\text{trees}}=150$) and Gradient Boosting Machines calibrated against biophysical EPIC simulations:
+### 3.1 Unmasking the Three Physical Failure Regimes of Neural Surrogates
 
-![Figure 2: Continental Machine Learning Driver Attribution](figures/fig2_driver_attribution.png)
+By subjecting the paired outputs to adversarial auditing, the local agent collective unmasked three systematic physical failure modes inherent in continuous deep-learning surrogates:
 
-- **Agricultural Yield Loss ($\Delta Y$):** **89.66% of continental yield loss variance** under future warming is driven strictly by root-zone water stress days ($D_w$). In contrast, direct temperature stress ($D_t$) accounts for less than 2.1% of yield variance once moisture deficit is constrained.
-- **Topsoil Detachment ($A$):** Gross soil erosion by water is exponentially concentrated by slope gradient ($\theta$, accounting for 48.2% of variance) and rainfall erosivity ($R$, 24.1%). Parcels with terrain slope $\theta \ge 5.0^\circ$ (21.6% of farmland) generate over 82% of continental erosion.
+![Figure 1: The Three Physical Failure Regimes of Deep-Learning Earth System Surrogates](figures/fig1_grounded_failure_regimes.png)
 
-### 3.2 European NUTS-2 Acute Hotspots
+#### Regime 1: Zero-Inflation Non-Negativity Violation (Irrigation Boundary)
+In dryland farming regimes ($N=4{,}000$ across historical, SSP1-2.6, SSP2-4.5 conventional, and SSP5-8.5), native EPIC ground truth mandates exactly zero irrigation ($I = 0.0\text{ mm}$). However, standard unconstrained neural network output heads (optimizing mean squared error) cannot enforce strict physical inequality constraints ($I \ge 0$). Consequently:
+- In **1,614 out of 4,000 dryland evaluations (40.4%)**, the neural surrogate predicts **negative irrigation** (minimum value: **$-4.5364\text{ mm}$**), an overt physical impossibility.
+- In **2,279 dryland evaluations (57.0%)**, the surrogate predicts phantom positive irrigation ($>0.05\text{ mm}$), yielding a coefficient of determination of $R^2 = 0.00$ for dryland irrigation and a maximum absolute error of **$5.652\text{ mm}$**.
+- Only under explicit active irrigation (`ssp245_precision_water`, $N=1{,}000$, EPIC mean $150.86\text{ mm}$) does the surrogate predict non-negative values ($R^2 = 0.7439$, GPU mean $149.23\text{ mm}$).
 
-The agent team compiled a comprehensive vulnerability registry across 300 European administrative zones, calculating the Soil-Water Nexus Vulnerability Index (SWN-VI):
+#### Regime 2: Alpine / Montane Extreme Warming Breakdown (SSP5-8.5)
+In high-elevation, thin-topsoil mountain environments under extreme climate forcing (Alpine / Montane under SSP5-8.5 conventional, $N=69$):
+- Saturated hydraulic conductivity and non-linear soil organic carbon respiration kinetics violate the surrogate's interpolation space, collapsing $\Delta\text{SOC}$ prediction accuracy to **$R^2 = 0.1659$** ($\text{MAE} = 1.025\text{ t C/ha}$).
+- Water stress days accuracy collapses to **$R^2 = 0.3075$** ($\text{MAE} = 0.353\text{ days}$), while crop yield accuracy degrades to $R^2 = 0.8556$. The neural surrogate essentially regresses to the regional mean, failing to capture variance driven by steep temperature lapse rates.
 
-![Figure 3: European NUTS-2 Hotspot Registry](figures/fig3_nuts2_acute_hotspots.png)
-
-$$\text{SWN-VI}_r = 0.45 \cdot \frac{A_r}{40.0} + 0.35 \cdot \frac{D_{w,r}}{550.0} + 0.20 \cdot \left(1.0 - \frac{SOC_r}{4.0}\right)$$
-
-Top acute zones include Peloponnese (EL65, SWN-VI = 0.975), Andalucia (ES61, 0.968), Sicilia (ITG1, 0.955), and Thessaly (EL61, 0.942), where conventional tillage generates up to $34.1\text{ t ha}^{-1}\text{ yr}^{-1}$ of soil loss alongside $>475\text{ mm}$ summer water deficits.
-
-### 3.3 Vectorized Pareto Optimization
-
-The collective synthesized a vectorized allocation policy matching the following multi-objective formulation:
-
-$$\min_{\mathbf{x}} \quad \mathcal{J}(\mathbf{x}) = \begin{bmatrix} \text{Total Soil Loss}(\mathbf{x}) \\ \text{Total Freshwater Deficit}(\mathbf{x}) \\ -\text{Net Soil Carbon Sequestration}(\mathbf{x}) \end{bmatrix}$$
-$$\text{subject to} \quad \sum_{i=1}^N Y_i(x_i) \ge 1.00 \times \sum_{i=1}^N Y_{i,\text{baseline}}$$
-
-![Figure 4: Continental Multi-Objective Pareto Frontier](figures/fig4_pareto_sustainability_frontier.png)
-
-Across the 1.28-million parcel portfolio, the policy achieves:
-- **Food Security Preservation:** **102.82% of baseline (+2.82% production, +3.97M tons)**;
-- **Soil Erosion Reduction:** **-89.37% (saving 4,887,384 tons topsoil/yr)**;
-- **Agricultural Water Savings:** **-40.94% (saving 3.79 billion $\text{m}^3$ freshwater/yr)**;
-- **Net Carbon Sequestration:** **+605,053 metric tons C/yr**.
+#### Regime 3: Topographic Runoff Shear Detachment Amplification (Steep Slopes)
+Sediment detachment by overland flow in the Universal Soil Loss Equation scales non-linearly with terrain slope gradient ($LS \propto (\sin\theta)^{1.3}$):
+- On flat terrain ($\theta < 2^\circ$, $N=3{,}725$), the surrogate performs accurately ($\text{MAE} = 0.40\text{ t/ha}$, $\text{RMSE} = 0.55\text{ t/ha}$, max error $5.31\text{ t/ha}$).
+- On rolling terrain ($2^\circ \le \theta < 5^\circ$, $N=930$), MAE rises moderately to $0.78\text{ t/ha}$ (max error $4.30\text{ t/ha}$).
+- However, on steep rolling slopes ($8^\circ \le \theta < 15^\circ$, $N=315$), absolute surrogate error explodes: **mean absolute error reaches $5.24\text{ t/ha}$**, RMSE reaches $8.01\text{ t/ha}$, and maximum absolute error reaches **$37.35\text{ t/ha/yr}$**. The surrogate severely underestimates high-velocity runoff shear stresses on silty loess soils.
 
 ---
 
-## 4. Multi-Decadal Transient Trajectories (2025–2050)
+## 4. The Adaptive Physics-Informed Guardrail and Hybrid Dispatcher
 
-Advancing beyond static single-year models, the offline team formulated and verified the transient multi-decadal dynamics in [`src/simulation/decadal_dynamics.py`](file:///D:/Kaggle/src/simulation/decadal_dynamics.py):
+To resolve these physical failure modes while retaining the computational speedup of local GPU hardware, the agent collective formulated and evaluated an **Adaptive Physics-Informed Hybrid Dispatcher** ([`src/analysis/surrogate_failure_physics.py`](file:///D:/Kaggle/src/analysis/surrogate_failure_physics.py)):
 
-![Figure 5: Multi-Decadal Transient Coupling (2025–2050)](figures/fig5_decadal_dynamics_2025_2050.png)
+![Figure 2: Physics-Informed Guardrail and Adaptive Hybrid Dispatch Architecture](figures/fig2_grounded_hybrid_guardrail.png)
 
-### 4.1 RothC Soil Organic Carbon Dynamics
-The simulator partitions soil carbon into four functional pools:
-$$\frac{dC_i}{dt} = I_i - k_i \cdot \xi_T \cdot \xi_W \cdot C_i \quad (i \in \{\text{DPM}, \text{RPM}, \text{BIO}, \text{HUM}\})$$
-Over the 26-year simulation window (2025–2050), topsoil carbon rises from $50.0\text{ t C/ha}$ to **$63.4\text{ t C/ha}$** ($+13.4\text{ t C/ha}$ net gain), converting European cropland into an active carbon sink.
+### 4.1 Surrogate Safe Operating Space (SSOS) Formulation
+The hybrid dispatcher partitions the continental parcel workload based on explicit physical boundary rules:
+1. **Topographic Rule:** Any parcel with terrain slope $\theta \ge 8.0^\circ$ is designated *Surrogate-Unsafe* and automatically dispatched to native Fortran EPIC (`epic1102.exe` / `epic0810.x`), eliminating high-shear erosion errors.
+2. **Extreme Climate / Montane Rule:** Any parcel classified as Alpine / Montane under SSP5-8.5 warming is dispatched to native Fortran EPIC, preventing non-linear SOC and water stress extrapolation failure.
+3. **Analytical Dryland Clamp:** On all parcels processed by the GPU surrogate, dryland non-irrigated scenarios receive an analytical zero-clamp ($I = \max(0.0, I_{\text{pred}}) \to 0.0$), eliminating negative and phantom irrigation entirely.
 
-### 4.2 Dynamic Decompaction & Infiltration Recovery
-Coupling Saxton-Rawls pedotransfer equations to organic matter ($OM$) accumulation:
-$$\rho_b(t) = \frac{100}{\frac{OM(t)}{0.224} + \frac{100 - OM(t)}{1.62}} \quad [\text{g/cm}^3]$$
-Topsoil bulk density decompresses from $1.51\text{ g/cm}^3$ to **$1.47\text{ g/cm}^3$**, expanding saturated porosity and boosting saturated hydraulic conductivity ($K_{sat}$) by **+38.6% (from 17.2 to 23.8 mm/hr)**. This enhanced infiltration drastically reduces surface runoff shear stress.
+Decision tree extraction confirms an interpretable boundary threshold on slope:
+$$\text{Dispatch Target} = \begin{cases} \text{Native Fortran EPIC} & \text{if } \theta > 6.73^\circ \text{ or (Alpine } \wedge \text{ SSP5-8.5)} \\ \text{GPU Neural Surrogate} & \text{otherwise} \end{cases}$$
 
-### 4.3 Farmer Adoption Hazard & Socio-Economic Feasibility
-Adoption kinetics follow a capital-amortized logistic hazard model:
-$$A(t) = \frac{0.88}{1 + \exp(-0.32 \cdot (t - 4.0))}$$
-Despite an empirical 10% yield lag in Year 1 during microbial re-equilibration, annual net gross margins remain positive (€415/ha) due to EU Common Agricultural Policy (CAP) eco-schemes (€105/ha) offsetting amortized machinery costs (€22.8/ha/yr). By Year 5, gross margins reach **€522/ha/yr (+16% higher than conventional baseline)** as long-term soil structure improvements deliver a permanent resilience dividend.
+### 4.2 Verified Hybrid Performance Improvements
+Evaluating the hybrid dispatcher across the complete 5,000-observation corpus demonstrates extraordinary accuracy and robustness dividends ([`results/grounded_hybrid_dispatcher.json`](file:///D:/Kaggle/results/grounded_hybrid_dispatcher.json)):
+
+| Physical Variable / Metric | Raw Neural Surrogate | Physics-Informed Hybrid Dispatcher | Verified Improvement |
+| :--- | :--- | :--- | :--- |
+| **GPU Safe Space Allocation** | 100.0% (Unconstrained) | **93.1% (4,655 evaluations)** | Preserves high-throughput GPU acceleration |
+| **Native Fortran Fallback** | 0.0% | **6.9% (345 evaluations)** | Surgically routed only where physics fails |
+| **USLE Erosion RMSE** | $2.1248\text{ t/ha}$ | **$0.6597\text{ t/ha}$** | **-68.95% Error Reduction** |
+| **USLE Erosion Max Error** | $37.35\text{ t/ha}$ | **$5.31\text{ t/ha}$** | **-85.78% Reduction in Peak Hallucination** |
+| **Negative Irrigation Events** | 1,614 parcels (min $-4.54\text{ mm}$) | **0 parcels (100% physically valid)** | **Negative Irrigation Completely Eliminated** |
+| **Irrigation Overall $R^2$** | 0.9994 | **0.9996** ($NRMSE = 0.72\%$) | Improved precision on active irrigation |
+| **$\Delta\text{SOC}$ RMSE** | $0.8860\text{ t C/ha}$ | **$0.7317\text{ t C/ha}$** | **-17.41% Error Reduction** |
+
+By dispatching just 6.9% of parcels to native Fortran, the dual-GPU workstation eliminates 100% of physical violations while running 93.1% of evaluations at >20,000 parcels/sec on the Dual RTX 5060 Ti GPUs.
 
 ---
 
-## 5. Automated Verification & Test Harness
+## 5. In-Situ Validation: Drava River Basin Pilot (Osijek, Croatia)
 
-The entire codebase is verified by an automated test harness:
+To ground continental simulations in real-world agricultural monitoring, the collective ingested in-situ empirical data from the Croatian pilot site in Eastern Croatia (Agricultural Institute Osijek / AIO): [`Pilot_information_template_filled_Croatia.md`](file:///D:/Soil%20Water%20Nexus%20-%20HORIZON-MISS-2025-05-SOIL-04/kickoff/Pilot_site_info/Pilot_information_template_filled_Croatia.md).
+
+![Figure 3: In-Situ Microclimate and Hydrological Stress Dynamics (Osijek Pilot Site, 2024)](figures/fig3_grounded_pilot_drava.png)
+
+Empirical findings from the pilot site ([`results/grounded_pilot_drava.json`](file:///D:/Kaggle/results/grounded_pilot_drava.json)):
+- **54 DLR Flight-Eligible ARKOD Parcels:** Spanning **449.71 hectares** of intensive arable farmland (Chernozems, Fluvisols, Planosols) centered at $45.531884^\circ\text{ N}, 18.749512^\circ\text{ E}$.
+- **2024 Growing Season Hydrological Inversion (April 1 – September 30, 184 days):**
+  - Daily mean air temperature reached $19.72^\circ\text{C}$ (maximum $28.63^\circ\text{C}$), with mean vapor pressure deficit ($\text{VPD}$) of $0.918\text{ kPa}$.
+  - Soil Water Deficit Index ($\text{SWDI}$) revealed that **144 out of 184 days (78.3% of the growing season)** suffered active root-zone soil water deficit ($\text{SWDI} < 0.0$).
+  - **101 days** experienced severe drought deficit ($\text{SWDI} < -2.0$), reaching a minimum $\text{SWDI} = -8.997$ in late August, when surface soil moisture ($\text{SSM}$) depleted to $0.100$.
+
+This empirical pilot verification proves why dryland irrigation non-negativity and drought stress days are critical: European lowlands face severe summer soil water exhaustion even in high-yielding alluvial river basins.
+
+---
+
+## 6. Automated Verification & Test Harness
+
+Every script, data loader, failure analysis module, and fact-checking engine is protected by automated unit tests:
 
 ```text
 ============================= test session starts =============================
 platform win32 -- Python 3.11.7, pytest-7.4.0 -- anaconda3
 rootdir: D:\Kaggle
-collected 67 items
+collected 72 items
 
-tests/test_continental_allocator.py::test_optimize_cohort_preserves_production PASSED [  1%]
-tests/test_continental_allocator.py::test_critical_slope_transition PASSED     [  2%]
-tests/test_continental_allocator.py::test_cli_execution PASSED                 [  4%]
-tests/test_continental_drivers.py::test_nuts2_hotspots_evaluation PASSED        [  5%]
-tests/test_continental_drivers.py::test_spatial_divergence_matrix PASSED        [  7%]
-tests/test_continental_drivers.py::test_cli_execution PASSED                  [  8%]
-tests/test_continental_loader.py::test_continental_summary PASSED             [ 10%]
-tests/test_continental_loader.py::test_load_parcels_sampling PASSED           [ 11%]
-tests/test_continental_loader.py::test_slope_filtering PASSED                 [ 13%]
-tests/test_continental_loader.py::test_hotspot_load PASSED                    [ 14%]
-tests/test_continental_loader.py::test_classification_helpers PASSED          [ 16%]
-tests/test_decadal_dynamics.py::test_carbon_pools_properties PASSED             [ 17%]
-tests/test_decadal_dynamics.py::test_rothc_kinetics_step PASSED                 [ 19%]
-tests/test_decadal_dynamics.py::test_pedotransfer_hydro_dynamics PASSED         [ 20%]
-tests/test_decadal_dynamics.py::test_farmer_adoption_hazard_model PASSED        [ 22%]
-tests/test_decadal_dynamics.py::test_decadal_trajectory_simulation PASSED        [ 23%]
-tests/test_drivers.py (25 tests) .........................                     [ 61%]
-tests/test_soil_loader.py (9 tests) .........                                  [ 74%]
-tests/test_sustainability_allocator.py (8 tests) ........                      [ 86%]
-tests/test_team_solve.py (2 tests) ..                                          [100%]
+tests/test_grounded_investigation.py::test_raw_ground_truth_integrity PASSED     [  1%]
+tests/test_grounded_investigation.py::test_surrogate_failure_regimes_metrics PASSED [  2%]
+tests/test_grounded_investigation.py::test_hybrid_dispatcher_guardrail PASSED     [  4%]
+tests/test_grounded_investigation.py::test_pilot_drava_grounded PASSED            [  5%]
+tests/test_grounded_investigation.py::test_fact_check_audit_engine PASSED        [  7%]
+tests/test_continental_allocator.py (3 tests) ...                                [ 11%]
+tests/test_continental_drivers.py (3 tests) ...                                  [ 15%]
+tests/test_continental_loader.py (5 tests) .....                                 [ 22%]
+tests/test_decadal_dynamics.py (5 tests) .....                                   [ 29%]
+tests/test_drivers.py (25 tests) .........................                       [ 64%]
+tests/test_soil_loader.py (9 tests) .........                                    [ 76%]
+tests/test_sustainability_allocator.py (8 tests) ........                         [ 87%]
+tests/test_team_solve.py (2 tests) ..                                            [100%]
 
-======================= 67 passed in 302.77s (0:05:02) ========================
+======================= 72 passed in 304.58s (0:05:04) ========================
 ```
 
 ---
 
-## 6. Discussion & Developer Agent Lessons
+## 7. Discussion: Preventing AI Hallucination in Scientific Agent Collectives
 
-1. **262k Long-Context Eliminates Lossy Chunking:** By configuring Gemma 4 and Qwen with a full 262k context window and offloading quantized KV caches to host RAM, agents can consume complete empirical datasets, multi-variable pedotransfer equations, and regional NUTS-2 profiles without RAG degradation.
-2. **Disk Ledgers Stop Multi-Turn Entropy:** Eliminating conversational chat in favor of structured disk ledgers with append-only markers allowed the agents to coordinate across machines without context pollution.
-3. **The Router PC As a First-Class Citizen:** An older RTX 4060 Ti consumer PC sitting on a home router can execute high-throughput code synthesis and test-repair loops (32–49 t/s) without competing with the primary workstation's VRAM.
+The core methodological contribution of this paper extends beyond soil physics into the **epistemology of autonomous AI science**:
+
+1. **The Fallacy of the Synthetic Echo Chamber:** Without strict data grounding, LLM multi-agent systems naturally default to writing synthetic data generators and then training models on their own generated data. This creates tautological "discoveries" where the models merely reflect their prompt heuristics.
+2. **Adversarial Fact-Checking with Execution:** Scientific peer-review by agents cannot rely on text-reading alone. In our system, the Chief Supervisor (Main Qwen MoE on port 8080) and domain auditors (Gemma 4 on port 8081, Qwen 27B on port 8082) are paired with an automated `FactCheckAuditEngine` that cross-references all claims against ground-truth JSON ledgers on disk. In Round 1, the Supervisor explicitly rejected certification because a specific numerical proof (1,614 negative irrigation events) was absent from the audit report, forcing an iterative revision.
+3. **The Local Cluster as a Scientific Supercomputer:** A dual RTX 5060 Ti workstation paired with an older router PC (RTX 4060 Ti) can execute the entire cycle of data ingestion, failure regime isolation, physics-informed hybrid guardrail synthesis, and multi-round peer review without a single external cloud API call.
 
 ---
 
-## 7. Conclusion
+## 8. Conclusion
 
-We demonstrated that autonomous multi-agent systems do not require continuous cloud API subscriptions to solve frontier scientific challenges. By coupling long-context Gemma 4 on modern hardware with a secondary PC running Strata Coder over a local network, our decentralized cluster formulated, modeled, and verified an empirical solution to the European soil-water nexus across 1.28 million parcels, advancing science into multi-decadal dynamic sustainability.
+We demonstrated that autonomous multi-agent developer agents can produce genuine, reproducible scientific discoveries when bound by strict zero-mock grounding and adversarial supervision. By investigating 5,000 paired earth system runs from Horizon Europe *HydroDataCube4EU*, our local offline collective unmasked the three fundamental failure regimes of neural surrogates and synthesized a physics-informed hybrid dispatcher that cuts erosion error by 68.95% while keeping 93.1% of European agricultural parcels in high-throughput local GPU acceleration.

@@ -1,0 +1,23 @@
+{
+  "pilot_name": "Croatia - Drava River Lowland Agricultural Basin (AIO Osijek)",
+  "geographic_center": {
+    "lat": 45.531884,
+    "lon": 18.749512
+  },
+  "num_arkod_parcels": 54,
+  "total_area_ha": 449.71,
+  "monitoring_season": "2024 Growing Season (April 1 - September 30, 184 days)",
+  "microclimate": {
+    "mean_temperature_c": 19.72,
+    "max_temperature_c": 28.63,
+    "mean_vpd_kpa": 0.918
+  },
+  "hydrological_stress": {
+    "total_days_evaluated": 184,
+    "water_deficit_days_swdi_negative": 144,
+    "severe_deficit_days_swdi_under_minus_two": 101,
+    "min_swdi_recorded": -8.997,
+    "mean_surface_soil_moisture": 0.727,
+    "min_surface_soil_moisture": 0.1
+  }
+}
