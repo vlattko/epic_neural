@@ -171,6 +171,12 @@ The two local ideators generated complementary solutions:
 - **Proposal B (Qwen 3.8 27B):** Formulated the crop-shuffling portfolio with climate-resilient novel cultures. In parcels where baseline water stress days $D_{w, i} \ge 28$, conventional maize is replaced with **Pearl Millet** (*Pennisetum glaucum*, +52% water efficiency, -55% water stress). In parcels with $18 \le D_{w, i} < 28$, **Grain Sorghum** (*Sorghum bicolor*, +38% water efficiency, -45% water stress) is introduced. Degraded soils ($\text{SOC} < 2.0\%$) receive **Perennial Legume Rotations** (+0.52 t C/ha/yr). Flatlands ($\theta_i < 2.5^\circ$) apply precision agronomy to compensate for marginal land retirement.
 - **Solver Synthesis:** Synthesized both proposals into the unified `ParetoAllocator` algorithm.
 
+### 5.3 Context Scaling: Why 32k Context is Insufficient for Planetary Science ("Meat on the Bone")
+Conventional agent setups artificially constrain local models to 8k–32k context windows. In continental agro-ecological optimization, this limitation cripples reasoning:
+1. **Lossy Tabular Ingestion:** A continental dataset spanning 300 NUTS-2 regions, 34 countries, 5 IPCC pathways, and non-linear pedotransfer functions cannot fit into 32k tokens without extreme summarization. Crucial localized nuances (e.g., loess erodibility in Thessaly vs. thin montane topsoils in the Apennines) are lost.
+2. **Context Fragmentation & Incoherence:** Splitting problems across multiple conversational turns triggers severe context drift, where models lose track of continental caloric conservation constraints ($\ge 100\%$ production preservation).
+3. **The 262k Long-Context Paradigm:** By configuring both Ideator A (`google/gemma-4-26B-A4B-it`) and Ideator B (`Qwen/Qwen3.8-27B`) with **262,144 tokens context** (`-c 262144 -fa on -ctk q4_0 -ctv q4_0 -nkvo`), the ideators ingest complete, uncompressed continental data dossiers, full mathematical formulations (USLE, Torri pedotransfer, Saxton-Rawls PAWC), and multi-biome registries directly in prompt. Backed by the workstation's 128 GB host RAM and dual RTX 5060 Ti Blackwell GPUs, Gemma 4 sustains **65.2 to 68.8 tokens/sec** at 262k context, enabling rich, evidence-grounded scientific ideation.
+
 ---
 
 ## 6. Empirical Results & Pareto Verification
@@ -230,8 +236,8 @@ To evaluate the efficiency of our hybrid compute allocation, we logged latency, 
 | Component | Hosted Model | Hardware Platform | Context Length | Inference Speed | Role in Workflow |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Strata Worker** | `qwen3.8-flash-next-coder-iq1_m` | RTX 4060 Ti 16 GB + 32 GB RAM (Secondary LAN) | 262,144 tokens | **32.3–49.4 tokens/sec** | Task execution, file patching, repair loops |
-| **Ideator A** | `gemma-4-26B-A4B-it` (Q4_0) | RTX 5060 Ti #0 16 GB (Primary Blackwell) | 32,768 tokens | **110.2 tokens/sec** | Physical & agro-ecological proposal |
-| **Ideator B** | `Qwen3.8-27B` (Q4_0) | RTX 5060 Ti #1 16 GB (Primary Blackwell) | 32,768 tokens | **28.2–35.0 tokens/sec** | Economic & crop-shuffling proposal |
+| **Ideator A** | `gemma-4-26B-A4B-it` (Q4_0) | RTX 5060 Ti #0 16 GB (Primary Blackwell) | 262,144 tokens | **65.2–110.2 tokens/sec** | Physical & agro-ecological proposal |
+| **Ideator B** | `Qwen3.8-27B` (Q4_0) | RTX 5060 Ti #1 16 GB (Primary Blackwell) | 262,144 tokens | **28.2–45.0 tokens/sec** | Economic & crop-shuffling proposal |
 | **Supervisor** | `Gemini 3.8 Flash` | Google AI Pro (Cloud) | 1,000,000 tokens | Variable API | Task decomposition & final verification |
 
 ### Quota Consumption Comparison

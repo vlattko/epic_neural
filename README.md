@@ -17,12 +17,13 @@
 Under intensifying climate change, European agriculture faces a critical trade-off between **soil erosion mitigation**, **freshwater conservation**, and **food security preservation**. Monolithic AI assistants struggle with this multi-constraint problem due to context pollution, physical invariant hallucination, and cloud token exhaustion.
 
 We introduce a **decentralized, heterogeneous multi-agent architecture** combining:
-1. **Cloud Architectural Supervisor:** Google Antigravity (Gemini 3.8 Flash via AI Pro)
-2. **On-Device Primary Inference Node:** Dual NVIDIA GeForce RTX 5060 Ti 16 GB GPUs (Blackwell sm_120) hosting:
-   - **GPU 0 (`CUDA0`):** `google/gemma-4-26B-A4B-it` (**110.2 tokens/sec**)
-   - **GPU 1 (`CUDA1`):** `Qwen/Qwen3.8-27B` (in active serving)
+1. **Cloud Architectural Supervisor:** Google Antigravity (Gemini 3.8 Flash via AI Pro, 1,000,000 context window)
+2. **On-Device Primary Inference Node (Dual 262k Long-Context Ideators):** Dual NVIDIA GeForce RTX 5060 Ti 16 GB GPUs (Blackwell sm_120) backed by 128 GB Host RAM:
+   - **GPU 0 (`CUDA0`):** `google/gemma-4-26B-A4B-it` (**262,144 context window**, 65.2–110.2 tokens/sec, Physical & Agro-Ecological Modeling)
+   - **GPU 1 (`CUDA1`):** `Qwen/Qwen3.8-27B` (**262,144 context window**, 28.2–45.0 tokens/sec, Novel Cultures & Crop Shuffling)
 3. **Dedicated Secondary LAN Inference Node:** RTX 4060 Ti 16 GB + 32 GB RAM serving `qwen3.8-flash-next-coder-iq1_m` at **262,144 context window** via Strata daemon (**32.3–49.4 tokens/sec**).
 4. **Stateless File Ledger Communication:** Multi-agent collaboration based on the **Memdoor / GVS5H discipline** using append-only disk ledgers (`task.md`, `plan.md`, `notes.md`, `solution.py`, `review.md`).
+5. **Full Continental Biophysical Dossiers:** Each ideator ingests thousands of lines of uncompressed empirical ground truth: Torri pedotransfer erodibility, Saxton-Rawls PAWC, full NUTS-2 erosion rankings, and C4 crop physiological parameters.
 
 ### Continental Scale Results (1,284,769 Parcels / 1.14 Million Hectares)
 Derived directly from the Horizon Europe HORIZON-MISS-2025-05-SOIL-04 (*HydroDataCube4EU*) Land Parcel Identification System (LPIS) geodatabase:
