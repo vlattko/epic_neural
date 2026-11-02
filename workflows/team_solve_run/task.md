@@ -1,0 +1,1 @@
+Solve the European Soil-Water Nexus Pareto Reallocation Challenge: Find alternative land use and novel crop configurations that strictly preserve pan-European food production while reducing soil erosion by >60% and water deficit by >30%.
