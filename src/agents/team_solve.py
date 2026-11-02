@@ -135,11 +135,11 @@ class TeamSolveWorkflow:
             ),
             AgentRole.IDEATOR_A: ModelConfig(
                 model_name="gemma-4-26B-A4B-it",
-                base_url="http://172.20.20.120:8080/v1",
+                base_url="http://127.0.0.1:8081/v1",
             ),
             AgentRole.IDEATOR_B: ModelConfig(
                 model_name="qwen3.8-27B",
-                base_url="http://172.20.20.120:8080/v1",
+                base_url="http://127.0.0.1:8082/v1",
             ),
             AgentRole.SOLVER: ModelConfig(
                 model_name="qwen3.8-flash-next-coder-iq1_m",
@@ -147,7 +147,7 @@ class TeamSolveWorkflow:
             ),
             AgentRole.REVIEWER: ModelConfig(
                 model_name="gemma-4-26B-A4B-it",
-                base_url="http://172.20.20.120:8080/v1",
+                base_url="http://127.0.0.1:8081/v1",
             ),
             AgentRole.REPAIR: ModelConfig(
                 model_name="qwen3.8-flash-next-coder-iq1_m",

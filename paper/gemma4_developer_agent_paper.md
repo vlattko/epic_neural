@@ -229,9 +229,9 @@ To evaluate the efficiency of our hybrid compute allocation, we logged latency, 
 
 | Component | Hosted Model | Hardware Platform | Context Length | Inference Speed | Role in Workflow |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Strata Worker** | `qwen3.8-flash-next-coder-iq1_m` | RTX 4060 Ti 16 GB + 32 GB RAM (Secondary) | 262,144 tokens | **48.0 tokens/sec** | Task execution, file patching, repair loops |
-| **Ideator A** | `gemma-4-26B-A4B-it` (Q4_0) | RTX 5060 Ti #0 16 GB (Primary) | 32,768 tokens | **34.5 tokens/sec** | Physical & agro-ecological proposal |
-| **Ideator B** | `Qwen3.8-27B` (Q4_0) | RTX 5060 Ti #1 16 GB (Primary) | 32,768 tokens | **28.2 tokens/sec** | Economic & crop-shuffling proposal |
+| **Strata Worker** | `qwen3.8-flash-next-coder-iq1_m` | RTX 4060 Ti 16 GB + 32 GB RAM (Secondary LAN) | 262,144 tokens | **32.3–49.4 tokens/sec** | Task execution, file patching, repair loops |
+| **Ideator A** | `gemma-4-26B-A4B-it` (Q4_0) | RTX 5060 Ti #0 16 GB (Primary Blackwell) | 32,768 tokens | **110.2 tokens/sec** | Physical & agro-ecological proposal |
+| **Ideator B** | `Qwen3.8-27B` (Q4_0) | RTX 5060 Ti #1 16 GB (Primary Blackwell) | 32,768 tokens | **28.2–35.0 tokens/sec** | Economic & crop-shuffling proposal |
 | **Supervisor** | `Gemini 3.8 Flash` | Google AI Pro (Cloud) | 1,000,000 tokens | Variable API | Task decomposition & final verification |
 
 ### Quota Consumption Comparison
@@ -244,10 +244,13 @@ To evaluate the efficiency of our hybrid compute allocation, we logged latency, 
 
 All developed software adheres to production-grade software engineering standards:
 - **Modular Package Hierarchy:** Clean separation into `src.data` (ingestion), `src.analytics` (driver machine learning), `src.optimization` (Pareto allocation), and `src.agents` (team-solve workflow).
-- **Automated Test Suite:** Complete test suite encompassing **51 pytest unit and integration tests** with 100% pass rate:
+- **Automated Test Suite:** Complete test suite encompassing **62 pytest unit and integration tests** with 100% pass rate:
   - `tests/test_soil_loader.py`: 10 passed (schema validation, cache consistency, coordinate bounds).
+  - `tests/test_continental_loader.py`: 5 passed (1.28M parcel LPIS ingestion, pedotransfer & biophysical functions).
   - `tests/test_drivers.py`: 31 passed (RandomForest/GradientBoosting attribution, scenario divergence, determinism).
+  - `tests/test_continental_drivers.py`: 3 passed (300 NUTS-2 continental ranking, spatial vulnerability matrices).
   - `tests/test_sustainability_allocator.py`: 8 passed (production preservation, slope retirement, Pareto dominance).
+  - `tests/test_continental_allocator.py`: 3 passed (vectorized zero-copy NumPy optimization across 1.28M parcels).
   - `tests/test_team_solve.py`: 2 passed (full multi-agent end-to-end integration across all 8 workflow stages).
 - **Git Version Control:** Incremental semantic commits tracking each milestone from initialization to completion.
 
@@ -259,7 +262,7 @@ All developed software adheres to production-grade software engineering standard
 Our findings corroborate the core thesis of Memdoor: multi-agent cooperation dramatically improves when conversational chat is eliminated in favor of disk ledgers. By restricting agent interaction to reading `plan.md` and appending to `notes.md`, agents maintain clean, unpolluted contexts. When the reviewer agent diagnosed a path resolution error in `solution.py`, it formulated a precise repair directive without getting trapped in defensive conversational loops.
 
 ### 9.2 Real-World Policy Implications
-The empirical findings have direct policy implications for European environmental frameworks, including the EU Common Agricultural Policy (CAP) and the Horizon Europe Soil Mission. Conventional agricultural subsidies often incentivize monoculture row cropping regardless of slope gradient. Our Pareto optimization proves that by retiring less than 4% of extreme slope parcels and introducing water-efficient novel crops (Sorghum and Pearl Millet), Europe can **preserve 100% of food production** while virtually eliminating catastrophic soil erosion (-87%) and drastically mitigating irrigation crises (-43%).
+The empirical findings have direct policy implications for European environmental frameworks, including the EU Common Agricultural Policy (CAP) and the Horizon Europe Soil Mission. Conventional agricultural subsidies often incentivize monoculture row cropping regardless of slope gradient. Our Pareto optimization proves that by retiring less than 4% of extreme slope parcels and introducing water-efficient novel crops (Sorghum and Pearl Millet), Europe can **preserve 100% of food production** while virtually eliminating catastrophic soil erosion (-87% to -89%) and drastically mitigating irrigation crises (-41% to -43%).
 
 ---
 
@@ -272,9 +275,10 @@ We have demonstrated an autonomous, decentralized multi-agent coding and scienti
 ## Reproducibility & Artifacts
 All artifacts, scripts, and logs are publicly available in the repository:
 - Multi-Agent Orchestrator: `src/agents/team_solve.py`
-- Soil & Environmental Loader: `src/data/soil_loader.py`
-- Empirical Driver Analytics: `src/analytics/drivers.py`
-- Pareto Sustainability Allocator: `src/optimization/sustainability_allocator.py`
-- Full Automated Test Suite: `tests/` (51 tests, 100% passing)
+- Soil & Environmental Loader: `src/data/soil_loader.py` & `src/data/continental_loader.py`
+- Empirical Driver Analytics: `src/analytics/drivers.py` & `src/analytics/continental_drivers.py`
+- Pareto Sustainability Allocator: `src/optimization/sustainability_allocator.py` & `src/optimization/continental_allocator.py`
+- Full Automated Test Suite: `tests/` (62 tests, 100% passing)
 - Multi-Agent Shared Ledger: `workflows/team_solve_run/notes.md`
 - Generated Solution Artifact: `workflows/team_solve_run/solution.py`
+- Companion Continental Publication Paper: `paper/nature_sustainability_european_soil_water_nexus.md`
