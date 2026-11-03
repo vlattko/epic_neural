@@ -16,10 +16,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 RESULTS_DIR = REPO_ROOT / "results"
-RAW_CSV_PATH = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04"
-    r"\kickoff\validation_results\validation_1000pts_raw_comparison.csv"
-)
+RAW_CSV_PATH = REPO_ROOT / "data" / "validation_results" / "validation_1000pts_raw_comparison.csv"
 
 from src.analysis.surrogate_failure_physics import (
     load_ground_truth,

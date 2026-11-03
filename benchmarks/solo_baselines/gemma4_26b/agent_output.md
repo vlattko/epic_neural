@@ -1,6 +1,6 @@
 The objective is to evaluate a deep-learning surrogate (`gpu_*`) against a Fortran ground truth (`epic_*`) for 1,000 European agricultural parcels across 5 climate scenarios.
 
-    *   File: `D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04\kickoff\validation_results\validation_1000pts_raw_comparison.csv`
+    *   File: `data/validation_results/validation_1000pts_raw_comparison.csv`
     *   Columns: Metadata (`parcel_id`, `scenario`, `ecotype`, `elevation_tier`, `soil_envirotype`, `lon`, `lat`, `area_ha`, `elevation_m`, `slope_deg`, `pawc_mm`, `usle_k`, `is_test`), Ground Truth (`epic_*`), Surrogate (`gpu_*`), Errors (`err_*`).
     *   Split: 3,500 train, 1,500 test.
 

@@ -3,7 +3,7 @@
 Ingests and downscales ultra-high-resolution agricultural land parcels from the
 official European LPIS / ARKOD geodatabase (1,284,769 parcels, 1.14M hectares)
 and continental gridded climate-agroecological simulations across 300 NUTS-2 regions
-and 34 European nations from Horizon Europe HORIZON-MISS-2025-05-SOIL-04.
+and 34 European nations.
 """
 
 from __future__ import annotations
@@ -19,19 +19,10 @@ import numpy as np
 import pandas as pd
 
 
-# Default data paths in HORIZON-MISS-2025-05-SOIL-04
-DEFAULT_GPKG_PATH = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04"
-    r"\kickoff\official-boundaries\arkod_land_parcels.gpkg"
-)
-DEFAULT_ANALYSIS_DIR = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04"
-    r"\kickoff\analysis_results"
-)
-DEFAULT_NUTS_DIR = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04"
-    r"\kickoff\nuts_regions"
-)
+# Default continental data paths
+DEFAULT_GPKG_PATH = Path(__file__).resolve().parents[2] / "data" / "official-boundaries" / "arkod_land_parcels.gpkg"
+DEFAULT_ANALYSIS_DIR = Path(__file__).resolve().parents[2] / "data" / "analysis_results"
+DEFAULT_NUTS_DIR = Path(__file__).resolve().parents[2] / "data" / "nuts_regions"
 
 
 # European Ecotype Boundaries & Archetypes

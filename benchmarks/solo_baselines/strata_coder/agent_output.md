@@ -12,7 +12,7 @@ from pathlib import Path
 # =============================================================================
 
 CSV_PATH = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04\kickoff\validation_results\validation_1000pts_raw_comparison.csv"
+    r"data/validation_results/validation_1000pts_raw_comparison.csv"
 )
 
 df = pd.read_csv(CSV_PATH)

@@ -23,10 +23,7 @@ import pytest
 TESTS_DIR = Path(__file__).resolve().parent
 REPO_ROOT = TESTS_DIR.parent
 
-CSV_PATH = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04"
-    r"\kickoff\validation_results\validation_1000pts_raw_comparison.csv"
-)
+CSV_PATH = REPO_ROOT / "data" / "validation_results" / "validation_1000pts_raw_comparison.csv"
 
 PHYSICAL = {
     "slope_deg", "elevation_m", "pawc_mm", "sand", "silt", "clay", "bd", "soc",

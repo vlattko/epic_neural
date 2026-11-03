@@ -198,7 +198,7 @@ class TeamSolveWorkflow:
     def build_ideator_a_dossier() -> str:
         """Rich 262k domain dossier: Biophysical, pedotransfer, USLE parameters, and NUTS-2 hotspots."""
         return (
-            "### CONTINENTAL BIOPHYSICAL & AGRO-ECOLOGICAL PROTECTION DOSSIER (HORIZON-MISS-2025-05-SOIL-04)\n"
+            "### CONTINENTAL BIOPHYSICAL & AGRO-ECOLOGICAL PROTECTION DOSSIER (EUROPEAN SOIL-WATER NEXUS)\n"
             "[Context Scale: 1,284,769 Cadastral Parcels / 1.14M ha across 300 European NUTS-2 Regions in 34 Countries]\n\n"
             "1. Universal Soil Loss Equation (USLE / RUSLE) Biophysical Formulations:\n"
             "   - Annual Gross Soil Loss: A = R * K * LS * C * P (metric tons/ha/year)\n"
@@ -292,7 +292,7 @@ class TeamSolveWorkflow:
         )
 
     def _domain_reasoning_fallback(self, role: AgentRole) -> str:
-        """High-fidelity domain reasoning synthesizer for HORIZON-MISS-2025-05-SOIL-04."""
+        """High-fidelity domain reasoning synthesizer for the European Soil-Water Nexus."""
         if role == AgentRole.PLANNER:
             return (
                 "### Architectural Decomposition (Plan v2.0 - 262k Long-Context):\n"

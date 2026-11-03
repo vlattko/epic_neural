@@ -20,7 +20,7 @@ import pandas as pd
 
 import os
 REPO_ROOT = Path(__file__).resolve().parents[2]
-DATA_DIR = Path(os.environ.get("DATA_DIR", r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04\kickoff"))
+DATA_DIR = Path(os.environ.get("DATA_DIR", REPO_ROOT / "data"))
 RAW_CSV_PATH = DATA_DIR / "validation_results" / "validation_1000pts_raw_comparison.csv"
 PILOT_TS_PATH = DATA_DIR / "time_series" / "pilot_field_timeseries_hydrological.csv"
 FIGS_DIR = REPO_ROOT / "paper" / "figures"

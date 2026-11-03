@@ -1,4 +1,4 @@
-"""Loader for the SOIL-04 validation comparison table.
+"""Loader for the agro-hydrological validation comparison table.
 
 Reads ``validation_1000pts_raw_comparison.csv`` (one row per parcel x scenario,
 EPIC sequential output side by side with the GPU/numified output) into a
@@ -13,10 +13,7 @@ from pathlib import Path
 
 import pandas as pd
 
-DEFAULT_CSV_PATH = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04"
-    r"\kickoff\validation_results\validation_1000pts_raw_comparison.csv"
-)
+DEFAULT_CSV_PATH = Path(__file__).resolve().parents[2] / "data" / "validation_results" / "validation_1000pts_raw_comparison.csv"
 
 REQUIRED_COLUMNS = (
     "scenario",

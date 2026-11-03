@@ -1,7 +1,7 @@
 """Which soil/climate inputs actually drive EPIC yield and USLE erosion?
 
 Fits :class:`RandomForestRegressor` (erosion) and :class:`GradientBoostingRegressor`
-(yield) trees on the SOIL-04 EPIC validation table and reads the resulting
+(yield) trees on the Agro-Hydrological Soil-Water Nexus EPIC validation table and reads the resulting
 feature importances as "driver sensitivity": how strongly each physical soil
 property (``slope_deg``, ``elevation_m``, ``pawc_mm``, ``sand``, ``silt``,
 ``clay``, ``bd``, ``soc``, ``ph``, ``usle_k``) and each climate stress

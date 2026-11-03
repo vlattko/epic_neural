@@ -2,13 +2,13 @@
 
 **Authors:** Vlatko Galić$^1$, Strata Lead Architect$^2$, Gemma 4 26B-A4B-it$^2$, Qwen 3.8 27B$^2$, Strata Coder IQ1_M$^3$  
 **Affiliations:**  
-$^1$ Principal Investigator and Lead Agronomist  
+$^1$ Agricultural Institute Osijek, Južno predgrađe 17, 31000 Osijek, Croatia  
 $^2$ Local Distributed Inference Cluster (Dual NVIDIA RTX 5060 Ti Blackwell Workstation, 128 GB RAM)  
 $^3$ Autonomous Coding Worker (Secondary Router PC, NVIDIA RTX 4060 Ti 16 GB, 32 GB RAM)  
 **Target Track:** Kaggle Gemma 4 Developer Agent Paper Track  
 **Code Repository:** https://github.com/vlatkogalic/soil-water-nexus-agents  
 **Funding Statement:** HydroDataCube4Soil Water Nexus  
-**Data Provenance:** European Land Parcel Identification System (LPIS) and HydroDataCube4Soil Water Nexus  
+**Data Provenance:** European Land Parcel Identification System (LPIS) Agro-Hydrological Simulation Corpus  
 ---
 
 ## Abstract
@@ -17,7 +17,7 @@ Monolithic large language models frequently fail when deployed on high-dimension
 
 Our architecture couples a modern primary workstation featuring Dual NVIDIA GeForce RTX 5060 Ti GPUs (Blackwell architecture, 32 GB total VRAM, 128 GB host RAM) with an older secondary consumer PC (RTX 4060 Ti 16 GB, 32 GB RAM) connected across a local gigabit router. The primary workstation hosts the Strata Lead Architect (`Qwen3.8-Flash-Next-IQ3_XXS`, 75.8 GB MoE) at port 8080 as chief scientific supervisor, alongside Gemma 4 (`google/gemma-4-26B-A4B-it`) on CUDA0 (port 8081) as biophysical modeling and review specialist, and Qwen 27B (`Qwen/Qwen3.8-27B`) on CUDA1 (port 8082) as agronomic economics ideator. The secondary router PC runs a dedicated Strata Coder daemon (`qwen3.8-flash-next-coder-iq1_m`) at 192.168.1.120:8080 for high-throughput code synthesis and automated repair loops. Every model operates at a massive 262,144 token context window, and all agents communicate strictly through stateless, append-only disk ledgers adhering to the Memdoor discipline.
 
-We deploy this offline collective against an urgent problem in computational earth system science: discovering the physical failure boundaries of deep-learning surrogates and synthesizing an adaptive physics-informed hybrid dispatcher. Drawing upon 5,000 paired simulation runs (1,000 real European agricultural parcels evaluated across 5 IPCC climate pathways) from HydroDataCube4Soil Water Nexus, the agent team unmasked three systemic physical failure regimes in deep neural surrogates:
+We deploy this offline collective against an urgent problem in computational earth system science: discovering the physical failure boundaries of deep-learning surrogates and synthesizing an adaptive physics-informed hybrid dispatcher. Drawing upon 5,000 paired simulation runs (1,000 real European agricultural parcels evaluated across 5 IPCC climate pathways) comparing native Fortran EPIC against deep neural surrogates, the agent team unmasked three systemic physical failure regimes in deep neural surrogates:
 1. **Zero-Inflation Non-Negativity Violations:** In dryland regimes ($N=4{,}000$), unconstrained neural heads predicted non-zero and negative irrigation (1,614 parcels, minimum $-4.54\text{ mm}$), yielding $R^2 = 0.00$ and phantom water withdrawals in 97.3% of dryland evaluations.
 2. **Alpine Extremes Under High Warming:** In high-elevation Alpine and Montane terrain under SSP5-8.5 warming, surrogate accuracy collapsed on soil organic carbon delta ($R^2 = 0.1659$) and water stress days ($R^2 = 0.3075$).
 3. **Topographic Runoff Shear Amplification:** On rolling terrain ($\theta \ge 8^\circ$), non-linear sediment detachment in the Universal Soil Loss Equation drove absolute surrogate errors up to $37.35\text{ t/ha/yr}$ (mean absolute error of $5.24\text{ t/ha}$).
@@ -111,7 +111,7 @@ flowchart TD
 
 ## 3. Empirical Grounding: The 5,000 Paired EPIC Fortran vs. GPU Surrogate Corpus
 
-Rather than relying on ungrounded synthetic parcel generators or heuristic approximations, our investigation is rooted directly in the official HydroDataCube4Soil Water Nexus validation corpus: [`validation_1000pts_raw_comparison.csv`](data/validation_results/validation_1000pts_raw_comparison.csv).
+Rather than relying on ungrounded synthetic parcel generators or heuristic approximations, our investigation is rooted directly in the 5,000-run European agricultural parcel validation corpus: [`validation_1000pts_raw_comparison.csv`](data/validation_results/validation_1000pts_raw_comparison.csv).
 
 This corpus comprises 5,000 paired, deterministic observations (1,000 distinct European agricultural parcels evaluated across 5 IPCC climate pathways: historical baseline, SSP1-2.6 conservation, SSP2-4.5 conventional, SSP2-4.5 precision water, and SSP5-8.5 conventional). For every parcel and scenario, the dataset pairs the native, mass-conserving Fortran EPIC simulation ground truth (`epic_*`) side by side with the deep-learning GPU surrogate emulation (`gpu_*`) across 11 biophysical indicator variables. Crucially, the dataset features a strict held-out test partition (3,500 training runs, 1,500 test runs; `is_test == True`).
 
@@ -286,7 +286,7 @@ The core methodological contribution of this paper extends beyond soil physics i
 
 ## 9. Conclusion
 
-We demonstrated that autonomous multi-agent developer agents can produce genuine, reproducible scientific discoveries when bound by strict zero-mock grounding and adversarial supervision. By investigating 5,000 paired earth system runs from Horizon Europe HydroDataCube4Soil Water Nexus, our local offline collective unmasked the three fundamental failure regimes of neural surrogates and synthesized a physics-informed hybrid dispatcher that cuts erosion error by 68.95% while keeping 93.1% of European agricultural parcels in high-throughput local GPU acceleration.
+We demonstrated that autonomous multi-agent developer agents can produce genuine, reproducible scientific discoveries when bound by strict zero-mock grounding and adversarial supervision. By investigating 5,000 paired earth system runs across continental agricultural parcels, our local offline collective unmasked the three fundamental failure regimes of neural surrogates and synthesized a physics-informed hybrid dispatcher that cuts erosion error by 68.95% while keeping 93.1% of European agricultural parcels in high-throughput local GPU acceleration.
 
 ---
 

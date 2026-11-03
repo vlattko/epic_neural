@@ -19,7 +19,7 @@ A 100% offline, zero-cloud multi-agent collective on local consumer GPUs discove
 ```
 
 ### 3. Authors and Affiliations
-- **Vlatko Galić** (Principal Investigator & Lead Agronomist, Agricultural Institute Osijek)
+- **Vlatko Galićć** (Principal Investigator & Lead Agronomist, Agricultural Institute Osijek)
 - **Strata Lead Architect** (Local Distributed Inference Cluster, Dual NVIDIA RTX 5060 Ti Blackwell Workstation)
 - **Gemma 4 26B-A4B-it** (Biophysical Modeling & Review Specialist, CUDA0)
 - **Qwen 3.8 27B** (Agronomic Economics Ideator, CUDA1)
@@ -29,7 +29,7 @@ A 100% offline, zero-cloud multi-agent collective on local consumer GPUs discove
 - **GitHub Repository:** `https://github.com/vlatkogalic/soil-water-nexus-agents`
 - **Gemma 4 Model Weights:** `https://huggingface.co/google/gemma-4-26B-A4B-it`
 - **Qwen 3.8 27B Weights:** `https://huggingface.co/Qwen/Qwen3.8-27B`
-- **Dataset Provenance:** HydroDataCube4Soil Water Nexus
+- **Dataset Provenance:** European Land Parcel Identification System (LPIS) Agro-Hydrological Simulation Corpus
 
 ### 5. Abstract
 ```text
@@ -37,7 +37,7 @@ Monolithic large language models frequently fail when deployed on high-dimension
 
 Our architecture couples a modern primary workstation featuring Dual NVIDIA GeForce RTX 5060 Ti GPUs (Blackwell architecture, 32 GB total VRAM, 128 GB host RAM) with an older secondary consumer PC (RTX 4060 Ti 16 GB, 32 GB RAM) connected across a local gigabit router. The primary workstation hosts the Strata Lead Architect (Qwen3.8-Flash-Next-IQ3_XXS, 75.8 GB MoE) at port 8080 as chief scientific supervisor, alongside Gemma 4 (google/gemma-4-26B-A4B-it) on CUDA0 (port 8081) as biophysical modeling and review specialist, and Qwen 27B (Qwen/Qwen3.8-27B) on CUDA1 (port 8082) as agronomic economics ideator. The secondary router PC runs a dedicated Strata Coder daemon (qwen3.8-flash-next-coder-iq1_m) at 192.168.1.120:8080 for high-throughput code synthesis and automated repair loops. Every model operates at a massive 262,144 token context window, and all agents communicate strictly through stateless, append-only disk ledgers adhering to the Memdoor discipline.
 
-We deploy this offline collective against an urgent problem in computational earth system science: discovering the physical failure boundaries of deep-learning surrogates and synthesizing an adaptive physics-informed hybrid dispatcher. Drawing upon 5,000 paired simulation runs (1,000 real European agricultural parcels evaluated across 5 IPCC climate pathways) from HydroDataCube4Soil Water Nexus, the agent team unmasked three systemic physical failure regimes in deep neural surrogates: (1) Zero-inflation non-negativity violations in dryland irrigation (1,614 negative predictions down to -4.54 mm; phantom withdrawals in 97.3% of dryland cases), (2) Alpine and Montane extreme warming breakdown under SSP5-8.5 (SOC R2 collapses to 0.1659), and (3) Topographic runoff shear detachment amplification on rolling slopes (USLE erosion errors up to 37.35 t/ha/yr).
+We deploy this offline collective against an urgent problem in computational earth system science: discovering the physical failure boundaries of deep-learning surrogates and synthesizing an adaptive physics-informed hybrid dispatcher. Drawing upon 5,000 paired simulation runs (1,000 real European agricultural parcels evaluated across 5 IPCC climate pathways) comparing native Fortran EPIC against deep neural surrogates, the agent team unmasked three systemic physical failure regimes in deep neural surrogates: (1) Zero-inflation non-negativity violations in dryland irrigation (1,614 negative predictions down to -4.54 mm; phantom withdrawals in 97.3% of dryland cases), (2) Alpine and Montane extreme warming breakdown under SSP5-8.5 (SOC R2 collapses to 0.1659), and (3) Topographic runoff shear detachment amplification on rolling slopes (USLE erosion errors up to 37.35 t/ha/yr).
 
 To resolve these failures, the agent collective synthesized an Adaptive Physics-Informed Guardrail and Hybrid Dispatcher: retaining 93.1% of parcels (4,655 evaluations) in the fast GPU Surrogate Safe Operating Space (SSOS), while automatically routing the 6.9% high-risk parcels (345 evaluations) back to the native Fortran EPIC simulation core. This hybrid architecture eliminated 100% of negative irrigation events, reduced USLE erosion RMSE by 68.95% (from 2.12 to 0.66 t/ha), slashed maximum erosion error from 37.35 to 5.31 t/ha, and cut SOC error by 17.41%. The findings were further validated against in-situ empirical observations from the Croatian pilot site in the Drava River Basin (Osijek: 54 ARKOD parcels across 449.71 ha, revealing that 144 out of 184 growing-season days suffered active root-zone soil moisture deficit).
 

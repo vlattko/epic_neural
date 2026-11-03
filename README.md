@@ -4,7 +4,6 @@
 [![Pytest Status](https://img.shields.io/badge/pytest-62%20passed%20(100%25)-brightgreen.svg)](https://github.com/vlatkogalic/soil-water-nexus-agents)
 [![Hardware](https://img.shields.io/badge/Hardware-Dual%20RTX%205060%20Ti%20%2B%20LAN%20RTX%204060%20Ti-orange.svg)]()
 [![Inference Speed](https://img.shields.io/badge/Gemma%204-110.2%20t%2Fs-blueviolet.svg)]()
-[![Horizon Europe](https://img.shields.io/badge/Horizon%20Europe-HORIZON--MISS--2025--05--SOIL--04-teal.svg)]()
 
 > **Submission for the [Kaggle Gemma 4 Developer Agent Paper Track](https://www.kaggle.com/competitions/gemma-4-developer-agent-paper/overview)**  
 > **Target Journal Article:** *Nature Sustainability* ([Read Full Paper](file:///D:/Kaggle/paper/nature_sustainability_european_soil_water_nexus.md))  
@@ -26,7 +25,7 @@ We introduce a **decentralized, heterogeneous multi-agent architecture** combini
 5. **Full Continental Biophysical Dossiers:** Each ideator ingests thousands of lines of uncompressed empirical ground truth: Torri pedotransfer erodibility, Saxton-Rawls PAWC, full NUTS-2 erosion rankings, and C4 crop physiological parameters.
 
 ### Continental Scale Results (1,284,769 Parcels / 1.14 Million Hectares)
-Derived directly from the Horizon Europe HORIZON-MISS-2025-05-SOIL-04 (*HydroDataCube4EU*) Land Parcel Identification System (LPIS) geodatabase:
+Derived directly from the European Land Parcel Identification System (LPIS) geodatabase across 34 European nations:
 
 | Metric | Baseline (SSP245 Conventional) | Multi-Agent Reallocation | Absolute Delta | Percentage Change | Physical Impact |
 | :--- | :--- | :--- | :--- | :--- | :--- |

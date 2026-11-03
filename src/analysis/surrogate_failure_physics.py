@@ -2,7 +2,7 @@
 
 Ground-Truth Analysis of 5,000 Paired Simulations (1,000 Real European Parcels x 5 Climate Scenarios)
 Comparing Native EPIC Fortran Physics vs. Neural/GPU AI Surrogate.
-Data Provenance: Horizon Europe HORIZON-MISS-2025-05-SOIL-04 (HydroDataCube4EU).
+Data Provenance: European Land Parcel Identification System (LPIS) Agro-Hydrological Simulation Corpus.
 
 Zero synthetic data. Zero random placeholders. 100% deterministic empirical verification.
 """
@@ -19,10 +19,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.tree import DecisionTreeClassifier, export_text
 
 # Primary empirical validation file
-RAW_CSV_PATH = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04"
-    r"\kickoff\validation_results\validation_1000pts_raw_comparison.csv"
-)
+RAW_CSV_PATH = Path(__file__).resolve().parents[2] / "data" / "validation_results" / "validation_1000pts_raw_comparison.csv"
 
 INDICATOR_VARS = [
     "yield_t_ha",

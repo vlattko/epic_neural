@@ -16,15 +16,9 @@ from typing import Any, Dict
 import numpy as np
 import pandas as pd
 
-MANIFEST_PATH = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04"
-    r"\kickoff\Pilot_site_info\DLR_Eligible_ARKOD_Manifest_Osijek_54parcels.csv"
-)
+MANIFEST_PATH = Path(__file__).resolve().parents[2] / "data" / "Pilot_site_info" / "DLR_Eligible_ARKOD_Manifest_Osijek_54parcels.csv"
 
-TIMESERIES_PATH = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04"
-    r"\kickoff\time_series\pilot_field_timeseries_hydrological.csv"
-)
+TIMESERIES_PATH = Path(__file__).resolve().parents[2] / "data" / "time_series" / "pilot_field_timeseries_hydrological.csv"
 
 
 def analyze_pilot_drava(output_dir: Path) -> Dict[str, Any]:

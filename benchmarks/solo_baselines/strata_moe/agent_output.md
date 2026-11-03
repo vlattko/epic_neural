@@ -20,7 +20,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 # 0. CONFIGURATION
 # =============================================================================
 
-CSV_PATH = r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04\kickoff\validation_results\validation_1000pts_raw_comparison.csv"
+CSV_PATH = r"data/validation_results/validation_1000pts_raw_comparison.csv"
 
 TARGETS = [
     "yield_t_ha",

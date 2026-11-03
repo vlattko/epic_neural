@@ -13,7 +13,7 @@ INVARIANTS:
 You are tasked with evaluating whether a deep-learning GPU surrogate (`gpu_*`) accurately emulates the biophysical Fortran simulation ground truth (`epic_*`) across 1,000 European agricultural parcels and 5 climate scenarios.
 
 ## Raw Dataset Information
-- File Path: `D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04\kickoff\validation_results\validation_1000pts_raw_comparison.csv`
+- File Path: `data/validation_results/validation_1000pts_raw_comparison.csv`
 - Shape: 5,000 paired observations (1,000 unique parcels × 5 climate scenarios: historical, ssp126, ssp245, ssp245_precision_water, ssp585).
 - Key Columns:
   - Identification & Metadata: `parcel_id`, `scenario`, `ecotype`, `elevation_tier`, `soil_envirotype`, `lon`, `lat`, `area_ha`, `elevation_m`, `slope_deg`, `pawc_mm`, `usle_k`, `is_test` (boolean test split: 3,500 train, 1,500 test).

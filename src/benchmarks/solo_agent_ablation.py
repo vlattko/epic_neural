@@ -28,7 +28,7 @@ import urllib.error
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-RAW_DATA_PATH = Path(r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04\kickoff\validation_results\validation_1000pts_raw_comparison.csv")
+RAW_DATA_PATH = REPO_ROOT / "data" / "validation_results" / "validation_1000pts_raw_comparison.csv"
 BENCHMARK_BASE_DIR = REPO_ROOT / "benchmarks" / "solo_baselines"
 
 
