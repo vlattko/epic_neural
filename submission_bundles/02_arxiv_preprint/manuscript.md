@@ -7,7 +7,6 @@ $^2$ Local Distributed Inference Cluster (Dual NVIDIA RTX 5060 Ti Blackwell Work
 $^3$ Autonomous Coding Worker (Secondary Router PC, NVIDIA RTX 4060 Ti 16 GB, 32 GB RAM)  
 **Target Track:** Kaggle Gemma 4 Developer Agent Paper Track  
 **Code Repository:** https://github.com/vlatkogalic/soil-water-nexus-agents  
-**Funding Statement:** HydroDataCube4Soil Water Nexus  
 **Data Provenance:** European Land Parcel Identification System (LPIS) Agro-Hydrological Simulation Corpus  
 ---
 
