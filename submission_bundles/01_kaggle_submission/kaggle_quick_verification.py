@@ -21,7 +21,7 @@ def main() -> None:
     print("=" * 80)
     print("KAGGLE GEMMA 4 DEVELOPER AGENT PAPER: AUTONOMOUS VERIFICATION HARNESS")
     print("Manuscript: Autonomous Multi-Agent Scientific Discovery with Long-Context Gemma 4")
-    print("Principal Investigator: Vlatko Galić")
+    print("Principal Investigator: Vlatko Galic (Agricultural Institute Osijek)")
     print(f"Repository Root: {REPO_ROOT}")
     print("=" * 80)
 
