@@ -1,0 +1,100 @@
+[
+  {
+    "agent_id": "gemma4_26b",
+    "display_name": "Gemma 4 26B-A4B-it (CUDA0)",
+    "model_name": "gemma-4-26B-A4B-it",
+    "wall_clock_time_seconds": 54.49,
+    "output_length_chars": 4990,
+    "output_length_tokens_est": 1247,
+    "code_generated": false,
+    "code_executed_successfully": false,
+    "mock_or_random_detected": false,
+    "discovered_negative_irrigation": true,
+    "discovered_alpine_or_climate_failure": true,
+    "discovered_topographic_erosion_failure": true,
+    "proposed_hybrid_guardrail": true,
+    "eval_score_out_of_6": 4,
+    "failure_details": [
+      "No executable Python code block generated",
+      "Code execution failed or produced runtime error"
+    ]
+  },
+  {
+    "agent_id": "qwen_27b",
+    "display_name": "Qwen 3.8 27B (CUDA1 / Host RAM)",
+    "model_name": "qwen3.8-27B",
+    "wall_clock_time_seconds": 156.82,
+    "output_length_chars": 3780,
+    "output_length_tokens_est": 945,
+    "code_generated": false,
+    "code_executed_successfully": false,
+    "mock_or_random_detected": false,
+    "discovered_negative_irrigation": true,
+    "discovered_alpine_or_climate_failure": false,
+    "discovered_topographic_erosion_failure": true,
+    "proposed_hybrid_guardrail": true,
+    "eval_score_out_of_6": 4,
+    "failure_details": [
+      "No executable Python code block generated",
+      "Code execution failed or produced runtime error"
+    ]
+  },
+  {
+    "agent_id": "strata_moe",
+    "display_name": "Strata MoE (Dual 5060 Ti Workstation)",
+    "model_name": "qwen3.8-flash-next-iq3_xxs",
+    "wall_clock_time_seconds": 72.09,
+    "output_length_chars": 1841,
+    "output_length_tokens_est": 460,
+    "code_generated": false,
+    "code_executed_successfully": false,
+    "mock_or_random_detected": false,
+    "discovered_negative_irrigation": true,
+    "discovered_alpine_or_climate_failure": false,
+    "discovered_topographic_erosion_failure": true,
+    "proposed_hybrid_guardrail": true,
+    "eval_score_out_of_6": 4,
+    "failure_details": [
+      "No executable Python code block generated",
+      "Code execution failed or produced runtime error"
+    ]
+  },
+  {
+    "agent_id": "strata_coder",
+    "display_name": "Strata Coder IQ1_M (Router PC LAN)",
+    "model_name": "qwen3.8-flash-next-coder-iq1_m",
+    "wall_clock_time_seconds": 46.2,
+    "output_length_chars": 1942,
+    "output_length_tokens_est": 485,
+    "code_generated": false,
+    "code_executed_successfully": false,
+    "mock_or_random_detected": false,
+    "discovered_negative_irrigation": true,
+    "discovered_alpine_or_climate_failure": false,
+    "discovered_topographic_erosion_failure": true,
+    "proposed_hybrid_guardrail": false,
+    "eval_score_out_of_6": 3,
+    "failure_details": [
+      "No executable Python code block generated",
+      "Code execution failed or produced runtime error",
+      "Did not formulate a hybrid dispatch / fallback architecture"
+    ]
+  },
+  {
+    "agent_id": "team_collective",
+    "display_name": "Heterogeneous Team Collective (Strata + Gemma 4 + Qwen 27B + Router Coder)",
+    "model_name": "Decentralized Multi-Agent Heterogeneous Cluster",
+    "wall_clock_time_seconds": 380.0,
+    "output_length_chars": 28450,
+    "output_length_tokens_est": 7112,
+    "code_generated": true,
+    "code_executed_successfully": true,
+    "mock_or_random_detected": false,
+    "discovered_negative_irrigation": true,
+    "discovered_alpine_or_climate_failure": true,
+    "discovered_topographic_erosion_failure": true,
+    "proposed_hybrid_guardrail": true,
+    "eval_score_out_of_6": 6,
+    "failure_details": []
+  }
+]

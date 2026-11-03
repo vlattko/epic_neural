@@ -1,0 +1,20 @@
+{
+  "agent_id": "qwen_27b",
+  "display_name": "Qwen 3.8 27B (CUDA1 / Host RAM)",
+  "model_name": "qwen3.8-27B",
+  "wall_clock_time_seconds": 156.82,
+  "output_length_chars": 3780,
+  "output_length_tokens_est": 945,
+  "code_generated": false,
+  "code_executed_successfully": false,
+  "mock_or_random_detected": false,
+  "discovered_negative_irrigation": true,
+  "discovered_alpine_or_climate_failure": false,
+  "discovered_topographic_erosion_failure": true,
+  "proposed_hybrid_guardrail": true,
+  "eval_score_out_of_6": 4,
+  "failure_details": [
+    "No executable Python code block generated",
+    "Code execution failed or produced runtime error"
+  ]
+}
