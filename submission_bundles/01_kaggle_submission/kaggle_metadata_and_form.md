@@ -26,7 +26,7 @@ A 100% offline, zero-cloud multi-agent collective on local consumer GPUs discove
 - **Strata Coder IQ1_M** (Autonomous Coding Worker, Secondary Router PC, NVIDIA RTX 4060 Ti 16 GB)
 
 ### 4. Repository & Weight Links
-- **GitHub Repository:** `https://github.com/vlatkogalic/soil-water-nexus-agents`
+- **GitHub Repository:** `https://github.com/vlattko/soil-water-nexus-agents`
 - **Gemma 4 Model Weights:** `https://huggingface.co/google/gemma-4-26B-A4B-it`
 - **Qwen 3.8 27B Weights:** `https://huggingface.co/Qwen/Qwen3.8-27B`
 - **Dataset Provenance:** European Land Parcel Identification System (LPIS) Agro-Hydrological Simulation Corpus
@@ -60,7 +60,7 @@ To prove that the multi-agent collective provides an essential advantage over is
 2. [ ] Click **"Submit Paper"** / **"New Submission"**.
 3. [ ] Upload [`paper_submission.md`](paper_submission.md) (or compile to PDF via Pandoc/Typst and upload `paper_submission.pdf`).
 4. [ ] In the submission text box / description, paste the Title, Subtitle, and Abstract above.
-5. [ ] Provide the GitHub repository URL (`https://github.com/vlatkogalic/soil-water-nexus-agents`).
+5. [ ] Provide the GitHub repository URL (`https://github.com/vlattko/soil-water-nexus-agents`).
 6. [ ] Attach the 3 key grounded figures from `figures/`:
    - `fig1_grounded_failure_regimes.png`
    - `fig2_grounded_hybrid_guardrail.png`

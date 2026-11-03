@@ -6,7 +6,7 @@ $^1$ Agricultural Institute Osijek, Južno predgrađe 17, 31000 Osijek, Croatia
 $^2$ Local Distributed Inference Cluster (Dual NVIDIA RTX 5060 Ti Blackwell Workstation, 128 GB RAM)  
 $^3$ Autonomous Coding Worker (Secondary Router PC, NVIDIA RTX 4060 Ti 16 GB, 32 GB RAM)  
 **Target Track:** Kaggle Gemma 4 Developer Agent Paper Track  
-**Code Repository:** https://github.com/vlatkogalic/soil-water-nexus-agents  
+**Code Repository:** https://github.com/vlattko/soil-water-nexus-agents  
 **Data Provenance:** European Land Parcel Identification System (LPIS) Agro-Hydrological Simulation Corpus  
 ---
 

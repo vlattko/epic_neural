@@ -1,7 +1,7 @@
 # European Soil-Water Nexus: Autonomous Multi-Agent Scientific Discovery & Continental Pareto Optimization
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![Pytest Status](https://img.shields.io/badge/pytest-62%20passed%20(100%25)-brightgreen.svg)](https://github.com/vlatkogalic/soil-water-nexus-agents)
+[![Pytest Status](https://img.shields.io/badge/pytest-62%20passed%20(100%25)-brightgreen.svg)](https://github.com/vlattko/soil-water-nexus-agents)
 [![Hardware](https://img.shields.io/badge/Hardware-Dual%20RTX%205060%20Ti%20%2B%20LAN%20RTX%204060%20Ti-orange.svg)]()
 [![Inference Speed](https://img.shields.io/badge/Gemma%204-110.2%20t%2Fs-blueviolet.svg)]()
 
@@ -192,6 +192,6 @@ python -m src.agents.team_solve --workspace ./workflows/team_solve_run
   author={Galic, Vlatko and Google Antigravity Agentic Team},
   journal={Nature Sustainability (In Prep) / Kaggle Gemma 4 Developer Agent Track},
   year={2026},
-  url={https://github.com/vlatkogalic/soil-water-nexus-agents}
+  url={https://github.com/vlattko/soil-water-nexus-agents}
 }
 ```

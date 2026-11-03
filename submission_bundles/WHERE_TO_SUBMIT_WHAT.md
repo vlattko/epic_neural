@@ -44,7 +44,7 @@ D:\Kaggle\submission_bundles\
 3. Upload the paper text:
    - Provide [`01_kaggle_submission/paper_submission.md`](01_kaggle_submission/paper_submission.md) (or compile it to PDF using `build_pdf.bat` and upload `paper_submission.pdf`).
 4. Link the Codebase:
-   - Provide your GitHub repository URL: `https://github.com/vlatkogalic/soil-water-nexus-agents`.
+   - Provide your GitHub repository URL: `https://github.com/vlattko/soil-water-nexus-agents`.
    - Mention the one-click judge verification: *"Judges can verify all 76 unit tests and empirical ledgers with `python kaggle_quick_verification.py`"*.
 5. Attach key figures from [`01_kaggle_submission/figures/`](01_kaggle_submission/figures/):
    - `fig1_decentralized_cluster_dag.png` (Hardware topology)
@@ -82,7 +82,7 @@ D:\Kaggle\submission_bundles\
 
 ## Target 3: GitHub Open-Source Release
 
-- **Destination URL:** `https://github.com/vlatkogalic/soil-water-nexus-agents`
+- **Destination URL:** `https://github.com/vlattko/soil-water-nexus-agents`
 
 ### Step-by-Step Release Instructions:
 1. Push local changes from `D:\Kaggle` to GitHub:

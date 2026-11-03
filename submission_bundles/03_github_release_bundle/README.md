@@ -56,7 +56,7 @@ The agent collective synthesized an adaptive routing guardrail:
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/vlatkogalic/soil-water-nexus-agents.git
+git clone https://github.com/vlattko/soil-water-nexus-agents.git
 cd soil-water-nexus-agents
 
 # 2. Run one-click verification harness

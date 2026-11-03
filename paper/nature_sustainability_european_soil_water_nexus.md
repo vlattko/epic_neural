@@ -7,7 +7,7 @@ $^2$ Local Distributed Scientific Computing Laboratory (Dual NVIDIA RTX 5060 Ti 
 $^3$ Autonomous Coding Worker (Secondary LAN Node, NVIDIA RTX 4060 Ti 16 GB + 32 GB RAM)  
 *\*Corresponding Author: vlatko.galic@example.edu*  
 **Target Journal:** *Nature Sustainability* / *Nature Food* (arXiv:2611.XXXXX [q-bio.QM])  
-**Code Repository:** `https://github.com/vlatkogalic/soil-water-nexus-agents` (Local workspace: `D:\Kaggle`)  
+**Code Repository:** `https://github.com/vlattko/soil-water-nexus-agents` (Local workspace: `D:\Kaggle`)  
 **Data Provenance:** European Land Parcel Identification System (LPIS) Agro-Hydrological Simulation Corpus  
 
 ---
@@ -132,7 +132,7 @@ The Osijek pilot site in the Drava River Basin is instrumented with continuous T
 ---
 
 ## Data and Code Availability
-All analysis scripts, failure diagnostic modules, hybrid dispatcher algorithms, and test suites are available under the MIT License at `https://github.com/vlatkogalic/soil-water-nexus-agents` with complete automated verification. The raw 5,000-point paired comparison file is archived with the project repository.
+All analysis scripts, failure diagnostic modules, hybrid dispatcher algorithms, and test suites are available under the MIT License at `https://github.com/vlattko/soil-water-nexus-agents` with complete automated verification. The raw 5,000-point paired comparison file is archived with the project repository.
 
 ---
 
