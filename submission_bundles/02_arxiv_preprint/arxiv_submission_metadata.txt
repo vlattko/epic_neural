@@ -17,7 +17,7 @@ q-bio.QM (Quantitative Biology - Quantitative Methods)
 stat.ML (Statistics - Machine Learning)
 
 COMMENTS:
-34 pages, 8 figures, 76 automated unit tests. Target Track: Kaggle Gemma 4 Developer Agent Paper Track. GitHub: https://github.com/vlattko/soil-water-nexus-agents
+34 pages, 8 figures, 76 automated unit tests. Target Track: Kaggle Gemma 4 Developer Agent Paper Track. GitHub: https://github.com/vlattko/epic_neural
 
 ACM CLASSIFICATION:
 I.2.11 (Distributed Artificial Intelligence - Multiagent systems); J.2 (Physical Sciences and Engineering - Earth and atmospheric sciences); J.3 (Life and Medical Sciences - Biology and genetics)

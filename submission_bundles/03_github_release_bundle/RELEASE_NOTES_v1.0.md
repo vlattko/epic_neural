@@ -1,7 +1,7 @@
 # Release Notes: v1.0.0-grounded
 
 **Release Tag:** `v1.0.0-grounded`  
-**Repository:** `https://github.com/vlattko/soil-water-nexus-agents`  
+**Repository:** `https://github.com/vlattko/epic_neural`  
 **Date:** November 2026  
 **Target Milestone:** Kaggle Gemma 4 Developer Agent Paper Track & arXiv Submission  
 

@@ -56,8 +56,8 @@ The agent collective synthesized an adaptive routing guardrail:
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/vlattko/soil-water-nexus-agents.git
-cd soil-water-nexus-agents
+git clone https://github.com/vlattko/epic_neural.git
+cd epic_neural
 
 # 2. Run one-click verification harness
 python submission_bundles/01_kaggle_submission/kaggle_quick_verification.py
