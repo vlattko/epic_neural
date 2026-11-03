@@ -6,18 +6,18 @@ $^1$ Principal Investigator and Lead Agronomist
 $^2$ Local Distributed Inference Cluster (Dual NVIDIA RTX 5060 Ti Blackwell Workstation, 128 GB RAM)  
 $^3$ Autonomous Coding Worker (Secondary Router PC, NVIDIA RTX 4060 Ti 16 GB, 32 GB RAM)  
 **Target Track:** Kaggle Gemma 4 Developer Agent Paper Track  
-**Code Repository:** `https://github.com/vlatkogalic/soil-water-nexus-agents` (Local workspace: `D:\Kaggle`)  
-**Data Provenance:** Horizon Europe HORIZON-MISS-2025-05-SOIL-04 (*HydroDataCube4EU*) and European Land Parcel Identification System (LPIS)  
-
+**Code Repository:** https://github.com/vlatkogalic/soil-water-nexus-agents  
+**Funding Statement:** HydroDataCube4Soil Water Nexus  
+**Data Provenance:** European Land Parcel Identification System (LPIS) and HydroDataCube4Soil Water Nexus  
 ---
 
 ## Abstract
 
 Monolithic large language models frequently fail when deployed on high-dimensional, multi-constraint scientific challenges because single-context agent loops suffer from progressive conversational drift, ungrounded hallucination of physical invariants, and prohibitive cloud inference quotas. In this paper, we introduce a completely offline, decentralized, heterogeneous multi-agent architecture that replaces cloud orchestration with local consumer hardware, anchored by the foundational ethos: *"Don't Sell Your Old PC"*. 
 
-Our architecture couples a modern primary workstation featuring Dual NVIDIA GeForce RTX 5060 Ti GPUs (Blackwell architecture, 32 GB total VRAM, 128 GB host RAM) with an older secondary consumer PC (RTX 4060 Ti 16 GB, 32 GB RAM) connected across a local gigabit router. The primary workstation hosts the Strata Lead Architect (`Qwen3.8-Flash-Next-IQ3_XXS`, 75.8 GB MoE) at port 8080 as chief scientific supervisor, alongside Gemma 4 (`google/gemma-4-26B-A4B-it`) on CUDA0 (port 8081) as biophysical modeling and review specialist, and Qwen 27B (`Qwen/Qwen3.8-27B`) on CUDA1 (port 8082) as agronomic economics ideator. The secondary router PC runs a dedicated Strata Coder daemon (`qwen3.8-flash-next-coder-iq1_m`) at 172.20.20.120:8080 for high-throughput code synthesis and automated repair loops. Every model operates at a massive 262,144 token context window, and all agents communicate strictly through stateless, append-only disk ledgers adhering to the Memdoor discipline.
+Our architecture couples a modern primary workstation featuring Dual NVIDIA GeForce RTX 5060 Ti GPUs (Blackwell architecture, 32 GB total VRAM, 128 GB host RAM) with an older secondary consumer PC (RTX 4060 Ti 16 GB, 32 GB RAM) connected across a local gigabit router. The primary workstation hosts the Strata Lead Architect (`Qwen3.8-Flash-Next-IQ3_XXS`, 75.8 GB MoE) at port 8080 as chief scientific supervisor, alongside Gemma 4 (`google/gemma-4-26B-A4B-it`) on CUDA0 (port 8081) as biophysical modeling and review specialist, and Qwen 27B (`Qwen/Qwen3.8-27B`) on CUDA1 (port 8082) as agronomic economics ideator. The secondary router PC runs a dedicated Strata Coder daemon (`qwen3.8-flash-next-coder-iq1_m`) at 192.168.1.120:8080 for high-throughput code synthesis and automated repair loops. Every model operates at a massive 262,144 token context window, and all agents communicate strictly through stateless, append-only disk ledgers adhering to the Memdoor discipline.
 
-We deploy this offline collective against an urgent problem in computational earth system science: discovering the physical failure boundaries of deep-learning surrogates and synthesizing an adaptive physics-informed hybrid dispatcher. Drawing upon 5,000 paired simulation runs (1,000 real European agricultural parcels evaluated across 5 IPCC climate pathways) from Horizon Europe HORIZON-MISS-2025-05-SOIL-04 (*HydroDataCube4EU*), the agent team unmasked three systemic physical failure regimes in deep neural surrogates:
+We deploy this offline collective against an urgent problem in computational earth system science: discovering the physical failure boundaries of deep-learning surrogates and synthesizing an adaptive physics-informed hybrid dispatcher. Drawing upon 5,000 paired simulation runs (1,000 real European agricultural parcels evaluated across 5 IPCC climate pathways) from HydroDataCube4Soil Water Nexus, the agent team unmasked three systemic physical failure regimes in deep neural surrogates:
 1. **Zero-Inflation Non-Negativity Violations:** In dryland regimes ($N=4{,}000$), unconstrained neural heads predicted non-zero and negative irrigation (1,614 parcels, minimum $-4.54\text{ mm}$), yielding $R^2 = 0.00$ and phantom water withdrawals in 97.3% of dryland evaluations.
 2. **Alpine Extremes Under High Warming:** In high-elevation Alpine and Montane terrain under SSP5-8.5 warming, surrogate accuracy collapsed on soil organic carbon delta ($R^2 = 0.1659$) and water stress days ($R^2 = 0.3075$).
 3. **Topographic Runoff Shear Amplification:** On rolling terrain ($\theta \ge 8^\circ$), non-linear sediment detachment in the Universal Soil Loss Equation drove absolute surrogate errors up to $37.35\text{ t/ha/yr}$ (mean absolute error of $5.24\text{ t/ha}$).
@@ -57,7 +57,7 @@ The discovery cluster is physically partitioned across two separate machines con
 | **Main Workstation**<br/>Dual RTX 5060 Ti 16 GB<br/>128 GB DDR5 RAM | `127.0.0.1:8080` | **Strata Engine**<br/>`Qwen3.8-Flash-Next-IQ3_XXS` | GSQ-RCO-IQ3_XXS<br/>(75.8 GB MoE) | **262,144 tokens** | **57.1 tok/s**<br/>(2.49s TTFT) | **Lead Scientific Architect and Supervisor**<br/>Decomposes tasks, formalizes mathematical specifications, supervises cluster. |
 | **Main Workstation**<br/>GPU 0 (`CUDA0`, 16 GB) | `127.0.0.1:8081` | **Llama-Server**<br/>`google/gemma-4-26B-A4B-it` | Q4_0<br/>(13.45 GB) | **262,144 tokens** | **41.6 tok/s**<br/>(4.54s TTFT) | **Biophysical Modeling and Reviewer**<br/>Pedotransfer functions, RothC kinetics, microclimate latent heat fluxes, audit. |
 | **Main Workstation**<br/>GPU 1 (`CUDA1`, 16 GB) | `127.0.0.1:8082` | **Llama-Server**<br/>`Qwen/Qwen3.8-27B` | Q4_0 (`-ngl 55`,<br/>Host RAM Offload) | **262,144 tokens** | **5.3 tok/s**<br/>(Host RAM) | **Agronomic Economics Ideator**<br/>Farmer adoption hazard curves, CAP eco-schemes, novel crop substitution. |
-| **Router PC (Secondary)**<br/>RTX 4060 Ti 16 GB<br/>32 GB DDR4 RAM | `172.20.20.120:8080` | **Strata Daemon**<br/>`qwen3.8-flash-next-coder-iq1_m` | IQ1_M<br/>(RAM Streaming) | **262,144 tokens** | **32 to 49 tok/s**<br/>(2.76s TTFT) | **Autonomous Coder and Repair Worker**<br/>Synthesizes production code, writes test suites, executes self-repair loops. |
+| **Router PC (Secondary)**<br/>RTX 4060 Ti 16 GB<br/>32 GB DDR4 RAM | `192.168.1.120:8080` | **Strata Daemon**<br/>`qwen3.8-flash-next-coder-iq1_m` | IQ1_M<br/>(RAM Streaming) | **262,144 tokens** | **32 to 49 tok/s**<br/>(2.76s TTFT) | **Autonomous Coder and Repair Worker**<br/>Synthesizes production code, writes test suites, executes self-repair loops. |
 
 ### 2.2 Memdoor Disk-Ledger Discipline
 
@@ -80,7 +80,7 @@ To balance unassisted scientific progress with rigorous physical safety, the sys
 | **Lead Scientific Architect**<br/>*Strata MoE (Port 8080)* | Main Workstation<br/>(128 GB RAM MoE) | **Supervisory and Synthesis Autonomy:** Authority to decompose tasks into testable specifications, arbitrate competing proposals, and certify releases. | Strictly barred from generating low-level procedural boilerplate code; must maintain high-level epistemic clarity. | Escalates to PI if ideator proposals are mutually irreconcilable under caloric conservation constraints. |
 | **Biophysics Specialist and Reviewer**<br/>*Gemma 4 26B (Port 8081)* | Main Workstation<br/>`CUDA0` (16 GB) | **Empirical Audit and Veto Autonomy:** Authority to review mathematical derivations, audit biophysical conservation laws, and veto invalid code. | Read-and-audit authority over worktrees; cannot write production code directly to disk. | Issues formal review rejection (`review.md`) if pedotransfer functions or mass balances violate empirical bounds. |
 | **Agronomic Economics Specialist**<br/>*Qwen 3.8 27B (Port 8082)* | Main Workstation<br/>`CUDA1` (16 GB) | **Ideation and Market Autonomy:** Authority to propose novel crop substitutions, design CAP Pillar I eco-scheme buffers, and optimize farmer revenue. | Proposals must respect biophysical erodibility thresholds and food calorie preservation ($Y \ge 1.0$). | Flagged if proposed crop rotations induce water deficits exceeding regional aquifer recharge rates. |
-| **Autonomous Coder and Repair Worker**<br/>*Strata Coder (172.20.20.120)* | Router PC (LAN)<br/>RTX 4060 Ti (16 GB) | **Implementation and Self-Repair Autonomy:** Autonomous repository editing, module compilation, test suite execution, and local repair loops. | Confined strictly to isolated Git worktrees; bounded to a maximum of 3 autonomous local repair attempts before escalating. | If unit tests fail after 3 repair loops, worker emits execution trace to `notes.md` and halts for supervisor steering. |
+| **Autonomous Coder and Repair Worker**<br/>*Strata Coder (192.168.1.120)* | Router PC (LAN)<br/>RTX 4060 Ti (16 GB) | **Implementation and Self-Repair Autonomy:** Autonomous repository editing, module compilation, test suite execution, and local repair loops. | Confined strictly to isolated Git worktrees; bounded to a maximum of 3 autonomous local repair attempts before escalating. | If unit tests fail after 3 repair loops, worker emits execution trace to `notes.md` and halts for supervisor steering. |
 
 ### 2.4 Cognitive Trajectory and Scientific Reasoning: From Dialectical Debate to Discovery
 
@@ -105,19 +105,19 @@ flowchart TD
    - Rolling montane terrain ($\theta \ge 8.0^\circ$): Mandatory retirement to permanent grassland, cutting erosion by 99.5%.
    - Intermediate slopes ($5.0^\circ \le \theta < 8.0^\circ$): Conversion to silvoarable agroforestry alley cropping, cutting erosion by 92% while maintaining partial crop yield.
    - Arable flatlands ($\theta < 5.0^\circ$): Shuffling water-inefficient continuous maize toward drought-hardy C4 cereals (*Sorghum bicolor*, *Pennisetum glaucum*) and deep-root legume leys, freeing 3.79 billion $\text{m}^3$ of water and expanding total food production by 2.82%.
-5. **Stage 5 (Multi-Decadal Dynamic Integration):** During Peer Review Round 1, Gemma 4 and the Lead Architect noted that static single-year models ignore the transient transition penalty: no-till systems experience an empirical 10% yield lag during early microbial restructuring, while soil organic carbon accumulation and bulk density decompaction require decadal timescales. The team formulated [`src/simulation/decadal_dynamics.py`](file:///D:/Kaggle/src/simulation/decadal_dynamics.py), coupling 4-pool RothC kinetics, Adams-Saxton-Rawls dynamic infiltration recovery ($K_{sat}$ increasing by 38.6%), and a capital-amortized farmer adoption hazard curve bridged by Common Agricultural Policy Eco-schemes (€105/ha/yr).
+5. **Stage 5 (Multi-Decadal Dynamic Integration):** During Peer Review Round 1, Gemma 4 and the Lead Architect noted that static single-year models ignore the transient transition penalty: no-till systems experience an empirical 10% yield lag during early microbial restructuring, while soil organic carbon accumulation and bulk density decompaction require decadal timescales. The team formulated [`src/simulation/decadal_dynamics.py`](file:///./src/simulation/decadal_dynamics.py), coupling 4-pool RothC kinetics, Adams-Saxton-Rawls dynamic infiltration recovery ($K_{sat}$ increasing by 38.6%), and a capital-amortized farmer adoption hazard curve bridged by Common Agricultural Policy Eco-schemes (€105/ha/yr).
 
 ---
 
 ## 3. Empirical Grounding: The 5,000 Paired EPIC Fortran vs. GPU Surrogate Corpus
 
-Rather than relying on ungrounded synthetic parcel generators or heuristic approximations, our investigation is rooted directly in the official Horizon Europe HORIZON-MISS-2025-05-SOIL-04 (*HydroDataCube4EU*) validation corpus: [`validation_1000pts_raw_comparison.csv`](file:///D:/Soil%20Water%20Nexus%20-%20HORIZON-MISS-2025-05-SOIL-04/kickoff/validation_results/validation_1000pts_raw_comparison.csv).
+Rather than relying on ungrounded synthetic parcel generators or heuristic approximations, our investigation is rooted directly in the official HydroDataCube4Soil Water Nexus validation corpus: [`validation_1000pts_raw_comparison.csv`](data/validation_results/validation_1000pts_raw_comparison.csv).
 
 This corpus comprises 5,000 paired, deterministic observations (1,000 distinct European agricultural parcels evaluated across 5 IPCC climate pathways: historical baseline, SSP1-2.6 conservation, SSP2-4.5 conventional, SSP2-4.5 precision water, and SSP5-8.5 conventional). For every parcel and scenario, the dataset pairs the native, mass-conserving Fortran EPIC simulation ground truth (`epic_*`) side by side with the deep-learning GPU surrogate emulation (`gpu_*`) across 11 biophysical indicator variables. Crucially, the dataset features a strict held-out test partition (3,500 training runs, 1,500 test runs; `is_test == True`).
 
 ### 3.1 Aggregate Accuracy Across 11 Indicators
 
-Evaluating the deep-learning surrogate across the held-out test set ($N=1{,}500$) yields strong aggregate statistical metrics across all standard indicators ([`results/grounded_surrogate_metrics.json`](file:///D:/Kaggle/results/grounded_surrogate_metrics.json)):
+Evaluating the deep-learning surrogate across the held-out test set ($N=1{,}500$) yields strong aggregate statistical metrics across all standard indicators ([`results/grounded_surrogate_metrics.json`](file:///./results/grounded_surrogate_metrics.json)):
 
 | Physical Variable | Target Unit | Test Sample Count | Surrogate MAE | Surrogate RMSE | NRMSE (%) | $R^2$ Score | PBIAS (%) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -135,7 +135,7 @@ Evaluating the deep-learning surrogate across the held-out test set ($N=1{,}500$
 
 ### 3.2 Unmasking the Three Physical Failure Regimes of Neural Surrogates
 
-Despite impressive global $R^2$ values exceeding 0.85, subjecting the paired predictions to adversarial biophysical auditing revealed three critical physical failure regimes inherent in unconstrained neural network representations ([`results/grounded_failure_regimes.json`](file:///D:/Kaggle/results/grounded_failure_regimes.json)):
+Despite impressive global $R^2$ values exceeding 0.85, subjecting the paired predictions to adversarial biophysical auditing revealed three critical physical failure regimes inherent in unconstrained neural network representations ([`results/grounded_failure_regimes.json`](file:///./results/grounded_failure_regimes.json)):
 
 ![Figure 1: The Three Physical Failure Regimes of Deep-Learning Earth System Surrogates](figures/fig1_grounded_failure_regimes.png)
 
@@ -160,7 +160,7 @@ Sediment detachment by overland flow in the Universal Soil Loss Equation scales 
 
 ## 4. The Adaptive Physics-Informed Guardrail and Hybrid Dispatcher
 
-To eliminate these physical violations while retaining the massive throughput of local GPU execution, the agent collective formulated and evaluated an Adaptive Physics-Informed Hybrid Dispatcher ([`src/analysis/surrogate_failure_physics.py`](file:///D:/Kaggle/src/analysis/surrogate_failure_physics.py)):
+To eliminate these physical violations while retaining the massive throughput of local GPU execution, the agent collective formulated and evaluated an Adaptive Physics-Informed Hybrid Dispatcher ([`src/analysis/surrogate_failure_physics.py`](file:///./src/analysis/surrogate_failure_physics.py)):
 
 ![Figure 2: Physics-Informed Guardrail and Adaptive Hybrid Dispatch Architecture](figures/fig2_grounded_hybrid_guardrail.png)
 
@@ -174,7 +174,7 @@ Decision tree extraction confirms an interpretable boundary threshold on slope:
 $$\text{Dispatch Target} = \begin{cases} \text{Native Fortran EPIC} & \text{if } \theta > 6.73^\circ \lor (\text{biome} = \text{Alpine} \land \text{scenario} = \text{SSP5-8.5}) \\ \text{GPU Neural Surrogate} & \text{otherwise} \end{cases}$$
 
 ### 4.2 Verified Hybrid Performance Improvements
-Evaluating the hybrid dispatcher across the complete 5,000-observation corpus demonstrates extraordinary accuracy and robustness dividends ([`results/grounded_hybrid_dispatcher.json`](file:///D:/Kaggle/results/grounded_hybrid_dispatcher.json)):
+Evaluating the hybrid dispatcher across the complete 5,000-observation corpus demonstrates extraordinary accuracy and robustness dividends ([`results/grounded_hybrid_dispatcher.json`](file:///./results/grounded_hybrid_dispatcher.json)):
 
 | Physical Variable / Metric | Raw Neural Surrogate | Physics-Informed Hybrid Dispatcher | Verified Improvement |
 | :--- | :--- | :--- | :--- |
@@ -192,11 +192,11 @@ By dispatching just 6.9% of parcels to native Fortran, the dual-GPU workstation 
 
 ## 5. In-Situ Validation: Drava River Basin Pilot (Osijek, Croatia)
 
-To ground continental simulations in real-world agricultural monitoring, the collective ingested in-situ empirical data from the Croatian pilot site in Eastern Croatia (Agricultural Institute Osijek / AIO): [`Pilot_information_template_filled_Croatia.md`](file:///D:/Soil%20Water%20Nexus%20-%20HORIZON-MISS-2025-05-SOIL-04/kickoff/Pilot_site_info/Pilot_information_template_filled_Croatia.md).
+To ground continental simulations in real-world agricultural monitoring, the collective ingested in-situ empirical data from the Croatian pilot site in Eastern Croatia (Agricultural Institute Osijek / AIO): [`Pilot_information_template_filled_Croatia.md`](data/validation_results/validation_1000pts_raw_comparison.csv).
 
 ![Figure 3: In-Situ Microclimate and Hydrological Stress Dynamics (Osijek Pilot Site, 2024)](figures/fig3_grounded_pilot_drava.png)
 
-Empirical findings from the pilot site ([`results/grounded_pilot_drava.json`](file:///D:/Kaggle/results/grounded_pilot_drava.json)):
+Empirical findings from the pilot site ([`results/grounded_pilot_drava.json`](file:///./results/grounded_pilot_drava.json)):
 - **54 DLR Flight-Eligible ARKOD Parcels:** Spanning 449.71 hectares of intensive arable farmland (Chernozems, Fluvisols, Planosols) centered at $45.531884^\circ\text{ N}, 18.749512^\circ\text{ E}$.
 - **2024 Growing Season Hydrological Inversion (April 1 to September 30, 184 days):**
   - Daily mean air temperature reached $19.72^\circ\text{C}$ (maximum $28.63^\circ\text{C}$), with mean vapor pressure deficit ($\text{VPD}$) of $0.918\text{ kPa}$.
@@ -214,7 +214,7 @@ Every script, data loader, failure analysis module, and fact-checking engine is 
 ```text
 ============================= test session starts =============================
 platform win32 -- Python 3.11.7, pytest-7.4.0 -- anaconda3
-rootdir: D:\Kaggle
+rootdir: .
 collected 76 items
 
 tests/test_grounded_investigation.py (5 tests) .....                            [  7%]
@@ -235,12 +235,12 @@ tests/test_team_solve.py (2 tests) ..                                           
 
 ## 7. Ablation Benchmark: Decentralized Multi-Agent Collective vs. Solo-Agent Monoliths
 
-A vital question in autonomous agent research is whether a **heterogeneous multi-agent collective** truly outperforms an isolated, monolithic model given the same task, prompt, and compute constraints. To provide definitive empirical proof, we executed a **rigorous solo-agent ablation benchmark** ([`src/benchmarks/solo_agent_ablation.py`](file:///D:/Kaggle/src/benchmarks/solo_agent_ablation.py)).
+A vital question in autonomous agent research is whether a **heterogeneous multi-agent collective** truly outperforms an isolated, monolithic model given the same task, prompt, and compute constraints. To provide definitive empirical proof, we executed a **rigorous solo-agent ablation benchmark** ([`src/benchmarks/solo_agent_ablation.py`](file:///./src/benchmarks/solo_agent_ablation.py)).
 
 ### 7.1 Clean-Slate Isolation and Zero Data Leakage Protocol
 To guarantee complete experimental fairness:
 1. **Zero Context Retention:** Each solo agent was queried in an isolated directory (`benchmarks/solo_baselines/<agent_id>/`) via a stateless, clean API session with zero memory of prior conversations, team notes, or chat history.
-2. **Zero Data Leakage:** Solo models were supplied only the raw dataset column schema and file path ([`validation_1000pts_raw_comparison.csv`](file:///D:/Soil%20Water%20Nexus%20-%20HORIZON-MISS-2025-05-SOIL-04/kickoff/validation_results/validation_1000pts_raw_comparison.csv)). Precomputed failure values (such as the 1,614 negative irrigation count, $R^2 = 0.166$ Alpine SOC breakdown, or 37.35 t/ha steep slope error) were strictly omitted from the prompt.
+2. **Zero Data Leakage:** Solo models were supplied only the raw dataset column schema and file path ([`validation_1000pts_raw_comparison.csv`](data/validation_results/validation_1000pts_raw_comparison.csv)). Precomputed failure values (such as the 1,614 negative irrigation count, $R^2 = 0.166$ Alpine SOC breakdown, or 37.35 t/ha steep slope error) were strictly omitted from the prompt.
 3. **Identical Task Objectives:** All agents were tasked with: (1) detecting physical boundary anomalies, (2) identifying environmental/topographic breakdown conditions, (3) synthesizing executable Python code for an adaptive hybrid guardrail, and (4) reporting verification metrics strictly on the held-out test split (`is_test == True`).
 
 ### 7.2 Comparative Benchmark Performance Matrix
@@ -286,7 +286,7 @@ The core methodological contribution of this paper extends beyond soil physics i
 
 ## 9. Conclusion
 
-We demonstrated that autonomous multi-agent developer agents can produce genuine, reproducible scientific discoveries when bound by strict zero-mock grounding and adversarial supervision. By investigating 5,000 paired earth system runs from Horizon Europe *HydroDataCube4EU*, our local offline collective unmasked the three fundamental failure regimes of neural surrogates and synthesized a physics-informed hybrid dispatcher that cuts erosion error by 68.95% while keeping 93.1% of European agricultural parcels in high-throughput local GPU acceleration.
+We demonstrated that autonomous multi-agent developer agents can produce genuine, reproducible scientific discoveries when bound by strict zero-mock grounding and adversarial supervision. By investigating 5,000 paired earth system runs from Horizon Europe HydroDataCube4Soil Water Nexus, our local offline collective unmasked the three fundamental failure regimes of neural surrogates and synthesized a physics-informed hybrid dispatcher that cuts erosion error by 68.95% while keeping 93.1% of European agricultural parcels in high-throughput local GPU acceleration.
 
 ---
 
@@ -313,7 +313,7 @@ To guarantee that agent autonomy converges toward physical reality rather than m
 
 ### 10.2 Verbatim System Prompts for All Cluster Roles
 
-The following system prompts are configured in [`src/agents/grounded_investigation.py`](file:///D:/Kaggle/src/agents/grounded_investigation.py) and injected into the local model endpoints at every invocation.
+The following system prompts are configured in [`src/agents/grounded_investigation.py`](file:///./src/agents/grounded_investigation.py) and injected into the local model endpoints at every invocation.
 
 #### 1. Chief Scientific Supervisor and Journal Editor-in-Chief
 - **Model and Host:** `qwen3.8-flash-next-iq3_xxs` on Main Workstation (`127.0.0.1:8080`)
@@ -367,7 +367,7 @@ Ensure conclusions are statistically robust, not mere artifacts of sample slicin
 ```
 
 #### 4. Precision Scientific Software Engineer and Coder
-- **Model and Host:** `qwen3.8-flash-next-coder-iq1_m` on Secondary Router PC (`172.20.20.120:8080`)
+- **Model and Host:** `qwen3.8-flash-next-coder-iq1_m` on Secondary Router PC (`192.168.1.120:8080`)
 - **Sampling Config:** `temperature = 0.2`, `top_p = 0.9`, `max_tokens = 1500`, `timeout = 120s`
 - **Verbatim System Prompt:**
 
@@ -475,7 +475,7 @@ Output your response formatted under the tag '<!-- proposal-b -->'.
 ```
 
 #### Stage 4: Code Synthesis and Autonomous Self-Repair on Router PC
-- **Recipient:** Strata Coder IQ1_M (`172.20.20.120:8080`)
+- **Recipient:** Strata Coder IQ1_M (`192.168.1.120:8080`)
 - **Prompt Text:**
 
 ```text
@@ -515,7 +515,7 @@ When the user mandated the complete elimination of synthetic placeholders, the s
 - **Prompt to Biophysical Auditor (Gemma 4 on Port 8081):**
 
 ```text
-Examine the ground-truth empirical findings from D:\Kaggle\results:
+Examine the ground-truth empirical findings from .\results:
 - Dryland irrigation: 1,614 parcels have negative irrigation (min -4.54 mm), 2,279 have phantom positive irrigation. R2=0.0.
 - Alpine Montane under SSP5-8.5: SOC delta R2 collapses to 0.1659, water stress days R2 collapses to 0.3075.
 - Steep slopes (8-15 deg): Max USLE erosion error reaches 37.35 t/ha, MAE=5.24 t/ha.
@@ -563,7 +563,7 @@ Deliver your formal editorial review and end with your verdict ('VERDICT: CERTIF
 
 ### 10.4 Deterministic Automated Fact-Checking (`FactCheckAuditEngine`)
 
-The automated audit engine implemented in [`src/agents/grounded_investigation.py`](file:///D:/Kaggle/src/agents/grounded_investigation.py) enforces exact numerical matching against JSON ground-truth ledgers. The validation algorithm operates as follows:
+The automated audit engine implemented in [`src/agents/grounded_investigation.py`](file:///./src/agents/grounded_investigation.py) enforces exact numerical matching against JSON ground-truth ledgers. The validation algorithm operates as follows:
 
 ```python
 class FactCheckAuditEngine:
@@ -660,7 +660,7 @@ To replicate the decentralized execution environment, the underlying inference s
 
 #### Node 4: Secondary Router PC: Strata Coder IQ1_M (Code and Test Repair)
 ```bash
-# Executed on Secondary PC (172.20.20.120) with RTX 4060 Ti 16 GB
+# Executed on Secondary PC (192.168.1.120) with RTX 4060 Ti 16 GB
 python serve/server.py `
     --engine strata `
     --config strata-coder-iq1_m.json `
@@ -685,7 +685,7 @@ Follow these steps to reproduce the entire empirical pipeline, failure analysis,
 
 ```bash
 # 1. Clone repository and navigate to workspace
-cd D:\Kaggle
+cd .
 
 # 2. Activate Python environment (Python 3.11 with NumPy, SciPy, Pandas, Scikit-learn, Pytest, Matplotlib)
 conda activate base
@@ -703,7 +703,7 @@ python -m src.analysis.pilot_drava_basin
 # - results/grounded_pilot_drava.json
 
 # 5. Execute Solo-Agent Baseline Ablation Benchmark across all isolated directories
-python D:\Kaggle\src\benchmarks\solo_agent_ablation.py --rescore
+python .\src\benchmarks\solo_agent_ablation.py --rescore
 # Outputs:
 # - benchmarks/solo_baselines/gemma4_26b/evaluation.json
 # - benchmarks/solo_baselines/qwen_27b/evaluation.json

@@ -8,13 +8,13 @@ $^3$ Autonomous Coding Worker (Secondary LAN Node, NVIDIA RTX 4060 Ti 16 GB + 32
 *\*Corresponding Author: vlatko.galic@example.edu*  
 **Target Journal:** *Nature Sustainability* / *Nature Food* (arXiv:2611.XXXXX [q-bio.QM])  
 **Code Repository:** `https://github.com/vlatkogalic/soil-water-nexus-agents` (Local workspace: `D:\Kaggle`)  
-**Data Provenance:** Horizon Europe HORIZON-MISS-2025-05-SOIL-04 (*HydroDataCube4EU*) & European Land Parcel Identification System (LPIS)  
+**Data Provenance:** HydroDataCube4Soil Water Nexus & European Land Parcel Identification System (LPIS)  
 
 ---
 
 ## Abstract
 
-Deep-learning surrogates are increasingly adopted to accelerate continental-scale earth system and agro-hydrological models. However, unconstrained neural surrogates optimize statistical loss without preserving physical conservation laws, introducing catastrophic non-physical hallucinations. Here, we present an empirical investigation of surrogate reliability and introduce an **Adaptive Physics-Informed Hybrid Dispatcher**, developed and audited by a **100% offline, decentralized heterogeneous multi-agent cluster**. Drawing upon **5,000 paired, deterministic simulations** (1,000 real European agricultural parcels evaluated across 5 IPCC climate pathways) from Horizon Europe *HydroDataCube4EU* (HORIZON-MISS-2025-05-SOIL-04), we pair native Fortran EPIC (*Environmental Policy Integrated Climate*) ground truth side-by-side with neural surrogate predictions across 11 biophysical variables. 
+Deep-learning surrogates are increasingly adopted to accelerate continental-scale earth system and agro-hydrological models. However, unconstrained neural surrogates optimize statistical loss without preserving physical conservation laws, introducing catastrophic non-physical hallucinations. Here, we present an empirical investigation of surrogate reliability and introduce an **Adaptive Physics-Informed Hybrid Dispatcher**, developed and audited by a **100% offline, decentralized heterogeneous multi-agent cluster**. Drawing upon **5,000 paired, deterministic simulations** (1,000 real European agricultural parcels evaluated across 5 IPCC climate pathways) from Horizon Europe HydroDataCube4Soil Water Nexus (HydroDataCube4Soil Water Nexus), we pair native Fortran EPIC (*Environmental Policy Integrated Climate*) ground truth side-by-side with neural surrogate predictions across 11 biophysical variables. 
 
 Our empirical audit reveals three fundamental physical failure regimes in deep-learning surrogates:
 1. **Zero-Inflation Non-Negativity Violation:** On dryland farmland ($N=4{,}000$), the neural surrogate predicts non-zero and **negative irrigation** in 1,614 evaluations (minimum $-4.5364\text{ mm}$), yielding $R^2 = 0.00$ and phantom water withdrawals in 97.3% of un-irrigated cases.
@@ -27,7 +27,7 @@ To resolve these breakdowns, our autonomous cluster synthesized a physics-inform
 
 ## 1. Introduction
 
-Continental-scale sustainability science relies on biophysical process models (such as EPIC, APEX, and SWAT) to predict soil loss, crop yield gaps, and water consumption under climate change (Panagos et al., 2015; IPCC, 2021). However, simulating millions of heterogeneous agricultural parcels over multi-decadal horizons using legacy Fortran process models presents severe computational bottlenecks. To overcome this, recent initiatives have trained deep neural network surrogates (e.g., spatiotemporal 1D-CNNs and MLPs) to emulate process models at speeds exceeding 25,000 evaluations per second on modern GPUs (Surrogate Architecture Roadmap, Horizon Europe *HydroDataCube4EU*).
+Continental-scale sustainability science relies on biophysical process models (such as EPIC, APEX, and SWAT) to predict soil loss, crop yield gaps, and water consumption under climate change (Panagos et al., 2015; IPCC, 2021). However, simulating millions of heterogeneous agricultural parcels over multi-decadal horizons using legacy Fortran process models presents severe computational bottlenecks. To overcome this, recent initiatives have trained deep neural network surrogates (e.g., spatiotemporal 1D-CNNs and MLPs) to emulate process models at speeds exceeding 25,000 evaluations per second on modern GPUs (Surrogate Architecture Roadmap, Horizon Europe HydroDataCube4Soil Water Nexus).
 
 Despite their computational speed, pure neural network surrogates suffer from a critical flaw: **they lack physical inductive biases**. Deep learning models minimize empirical loss functions (such as mean squared error) over training distributions, but do not inherently respect boundary constraints, mass conservation, or thermodynamic thresholds. In environmental policy and European agricultural planning, non-physical predictions—such as negative irrigation extractions, phantom water use, or massive under-predictions of sediment detachment on erodible slopes—can lead to disastrous misallocations of Common Agricultural Policy (CAP) resources.
 
@@ -39,7 +39,7 @@ Here, we demonstrate that resolving the reliability of earth system AI surrogate
 
 ### 2.1 The Three Physical Failure Regimes of Neural Earth System Surrogates
 
-Using the verified empirical comparison table [`validation_1000pts_raw_comparison.csv`](file:///D:/Soil%20Water%20Nexus%20-%20HORIZON-MISS-2025-05-SOIL-04/kickoff/validation_results/validation_1000pts_raw_comparison.csv), our local agent collective compared native Fortran EPIC ground truth (`epic_*`) against GPU neural surrogate emulation (`gpu_*`) across 11 key biophysical indicators:
+Using the verified empirical comparison table [`validation_1000pts_raw_comparison.csv`](file:///D:/Soil%20Water%20Nexus%20-%20HydroDataCube4Soil Water Nexus/kickoff/validation_results/validation_1000pts_raw_comparison.csv), our local agent collective compared native Fortran EPIC ground truth (`epic_*`) against GPU neural surrogate emulation (`gpu_*`) across 11 key biophysical indicators:
 
 ![Figure 1: The Three Physical Failure Regimes of Deep-Learning Earth System Surrogates](figures/fig1_grounded_failure_regimes.png)
 **Figure 1 | The Three Systematic Physical Failure Regimes of Deep-Learning Earth System Surrogates.** **A**, Regime 1: Zero-inflation non-negativity violation in dryland irrigation ($N=4{,}000$). The neural surrogate predicts negative values (min $-4.54\text{ mm}$) and phantom positive withdrawals (orange histogram), violating the true physical ground truth of $0.0\text{ mm}$ (navy dashed line). **B**, Regime 2: Breakdown of surrogate accuracy in Alpine / Montane terrain under SSP5-8.5 extreme warming ($N=69$), collapsing $\Delta\text{SOC}$ predictive skill to $R^2 = 0.1659$. **C**, Regime 3: Topographic erosion error amplification. Absolute USLE soil loss error scales exponentially on rolling slopes ($\theta \ge 8^\circ$), reaching a peak error of $37.35\text{ t ha}^{-1}\text{ yr}^{-1}$.
@@ -65,7 +65,7 @@ Universal Soil Loss Equation sediment detachment scales non-linearly with terrai
 
 ### 2.2 The Physics-Informed Boundary Guardrail and Hybrid Dispatcher
 
-To resolve these errors without sacrificing GPU speed, the collective formulated an **Adaptive Physics-Informed Hybrid Dispatcher** ([`results/grounded_hybrid_dispatcher.json`](file:///D:/Kaggle/results/grounded_hybrid_dispatcher.json)):
+To resolve these errors without sacrificing GPU speed, the collective formulated an **Adaptive Physics-Informed Hybrid Dispatcher** ([`results/grounded_hybrid_dispatcher.json`](file:///./results/grounded_hybrid_dispatcher.json)):
 
 ![Figure 2: Physics-Informed Guardrail and Adaptive Hybrid Dispatch Architecture](figures/fig2_grounded_hybrid_guardrail.png)
 **Figure 2 | Physics-Informed Hybrid Dispatch Architecture and Performance.** **A**, Workload partitioning across the 5,000 paired evaluations: 93.1% of parcels (4,655 evaluations) reside safely within the Surrogate Safe Operating Space (SSOS) on local GPUs, while 6.9% (345 evaluations) are dispatched to native Fortran EPIC. **B**, Error reduction achieved by the hybrid architecture, slashing USLE erosion RMSE by 68.95% and eliminating negative irrigation entirely.
@@ -93,7 +93,7 @@ To ground continental simulations in real agricultural realities, the collective
 ![Figure 3: In-Situ Microclimate and Hydrological Stress Dynamics (Osijek Pilot Site, 2024)](figures/fig3_grounded_pilot_drava.png)
 **Figure 3 | In-Situ Microclimate and Hydrological Stress Dynamics across the Osijek Pilot Site (2024 Growing Season).** **A**, Daily air temperature (red, left axis) and vapor pressure deficit (orange dashed, right axis) from April 1 to September 30, 2024. **B**, Soil Water Deficit Index (SWDI, blue curve), demonstrating that root-zone moisture was in active deficit (SWDI < 0) for 144 of the 184 monitoring days, with 101 days in severe drought deficit (SWDI < -2, crimson dotted line).
 
-Empirical findings ([`results/grounded_pilot_drava.json`](file:///D:/Kaggle/results/grounded_pilot_drava.json)):
+Empirical findings ([`results/grounded_pilot_drava.json`](file:///./results/grounded_pilot_drava.json)):
 - **54 DLR Flight-Eligible ARKOD Parcels:** Covering **449.71 hectares** of high-yielding cropland (Chernozems, Fluvisols, Planosols) centered at $45.531884^\circ\text{ N}, 18.749512^\circ\text{ E}$.
 - **184-Day Growing Season Dynamics (April 1 – September 30, 2024):**
   - Daily mean air temperature reached $19.72^\circ\text{C}$ (peak $28.63^\circ\text{C}$), with mean $\text{VPD} = 0.918\text{ kPa}$.
@@ -119,7 +119,7 @@ The EU Destination Earth (DestinE) and Soil Monitoring Law frameworks envision d
 ## 4. Methods
 
 ### 4.1 Paired Simulation Corpus & Processing
-The empirical dataset was drawn from Horizon Europe *HydroDataCube4EU* (HORIZON-MISS-2025-05-SOIL-04), comprising 5,000 paired observations across 1,000 European parcels and 5 climate scenarios (historical baseline, SSP1-2.6 conservation, SSP2-4.5 conventional, SSP2-4.5 precision water, SSP5-8.5 conventional). Native Fortran simulations were executed using standard EPIC 0810 / 1102 binaries (`epic1102.exe`), while GPU surrogates were evaluated using the PyTorch 1D-CNN spatiotemporal architecture.
+The empirical dataset was drawn from Horizon Europe HydroDataCube4Soil Water Nexus (HydroDataCube4Soil Water Nexus), comprising 5,000 paired observations across 1,000 European parcels and 5 climate scenarios (historical baseline, SSP1-2.6 conservation, SSP2-4.5 conventional, SSP2-4.5 precision water, SSP5-8.5 conventional). Native Fortran simulations were executed using standard EPIC 0810 / 1102 binaries (`epic1102.exe`), while GPU surrogates were evaluated using the PyTorch 1D-CNN spatiotemporal architecture.
 
 ### 4.2 Statistical and Performance Metrics
 Performance metrics were computed across overall ($N=5{,}000$), training ($N=3{,}500$), and held-out test ($N=1{,}500$, `is_test == True`) partitions:
@@ -132,7 +132,7 @@ The Osijek pilot site in the Drava River Basin is instrumented with continuous T
 ---
 
 ## Data and Code Availability
-All analysis scripts, failure diagnostic modules, hybrid dispatcher algorithms, and test suites are available under the MIT License at `https://github.com/vlatkogalic/soil-water-nexus-agents` with complete automated verification. The raw 5,000-point paired comparison file is archived in the Horizon Europe *HydroDataCube4EU* project repository.
+All analysis scripts, failure diagnostic modules, hybrid dispatcher algorithms, and test suites are available under the MIT License at `https://github.com/vlatkogalic/soil-water-nexus-agents` with complete automated verification. The raw 5,000-point paired comparison file is archived in the Horizon Europe HydroDataCube4Soil Water Nexus project repository.
 
 ---
 

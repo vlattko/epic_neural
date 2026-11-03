@@ -22,7 +22,7 @@ This repository implements a **100% offline, decentralized multi-agent scientifi
   - **Gemma 4 (`gemma-4-26B-A4B-it`, Port 8081, CUDA0):** Biophysical Modeling & Review Specialist (262k context).
   - **Qwen 27B (`Qwen3.8-27B`, Port 8082, CUDA1):** Agronomic Economics Ideator (262k context).
 - **Secondary Router PC (RTX 4060 Ti 16 GB, 32 GB RAM):**
-  - **Strata Coder (`qwen3.8-flash-next-coder-iq1_m`, 172.20.20.120:8080):** Autonomous Coding & Repair Worker.
+  - **Strata Coder (`qwen3.8-flash-next-coder-iq1_m`, 192.168.1.120:8080):** Autonomous Coding & Repair Worker.
 - **Inter-Agent Coordination:** Stateless, append-only disk ledgers adhering to the **Memdoor discipline** (`task.md`, `plan.md`, `notes.md`, `review.md`).
 
 ---
@@ -30,7 +30,7 @@ This repository implements a **100% offline, decentralized multi-agent scientifi
 ## 2. Key Scientific Breakthroughs
 
 ### The Three Physical Failure Regimes of Neural Surrogates
-Evaluating 5,000 paired EPIC Fortran vs deep-learning surrogate runs from Horizon Europe *HydroDataCube4EU* unmasked 3 critical physical breakdown regimes:
+Evaluating 5,000 paired EPIC Fortran vs deep-learning surrogate runs from Horizon Europe HydroDataCube4Soil Water Nexus unmasked 3 critical physical breakdown regimes:
 1. **Zero-Inflation Non-Negativity Violation (Dryland Irrigation):** Neural surrogates output negative irrigation in 1,614 out of 4,000 dryland runs (min -4.54 mm), hallucinating phantom water withdrawals ($R^2 = 0.0000$).
 2. **Alpine Extremes Under High Warming (SSP5-8.5):** In high-elevation Alpine soils, SOC delta accuracy collapses to $R^2 = 0.1659$ and water stress days to $R^2 = 0.3075$.
 3. **Topographic Runoff Shear Amplification:** On rolling slopes ($8^\circ\text{–}15^\circ$), USLE erosion prediction error balloons to $37.35\text{ t/ha/yr}$.

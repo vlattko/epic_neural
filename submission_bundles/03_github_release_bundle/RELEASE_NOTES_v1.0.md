@@ -10,7 +10,7 @@
 ## What's Included in This Release:
 
 ### 1. Grounded Surrogate Failure Physics Analysis
-- Evaluates 5,000 paired observations from Horizon Europe *HydroDataCube4EU* comparing native Fortran EPIC against deep-learning GPU emulations.
+- Evaluates 5,000 paired observations from Horizon Europe HydroDataCube4Soil Water Nexus comparing native Fortran EPIC against deep-learning GPU emulations.
 - Modules: `src/analysis/surrogate_failure_physics.py` and `src/analysis/pilot_drava_basin.py`.
 - Ground truth ledgers: `results/grounded_*.json`.
 

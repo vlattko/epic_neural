@@ -17,7 +17,9 @@ D:\Kaggle\submission_bundles\
 │   └── figures\                            (All 8 publication-grade 300 DPI figures)
 │
 ├── 02_arxiv_preprint\                      <-- BUNDLE 2: ARXIV / EARTHARXIV PREPRINT
-│   ├── manuscript.md                       (Full manuscript formatted for preprint servers)
+│   ├── arxiv_upload_package.zip            (Pre-packaged ZIP ready for direct upload to arXiv.org)
+│   ├── manuscript.tex                      (Complete, standalone LaTeX source with figures & citations)
+│   ├── manuscript.md                       (Full manuscript formatted for markdown preprint servers)
 │   ├── arxiv_submission_metadata.txt       (Categories, Comments, MSC/ACM classes, License)
 │   ├── build_pdf.bat                       (1-click script to compile PDF via Pandoc/Typst)
 │   └── figures\                            (High-res figures for TeX/PDF compilation)
@@ -62,14 +64,19 @@ D:\Kaggle\submission_bundles\
   - Recommended for instant publication without needing an arXiv author endorsement.
   - Categories: Environmental Sciences / Computational Agronomy / Pedology.
 
-### Step-by-Step Submission Instructions:
-1. Open [`02_arxiv_preprint/arxiv_submission_metadata.txt`](02_arxiv_preprint/arxiv_submission_metadata.txt).
-2. Copy the Title, Author list, TeX-compatible Abstract, and MSC/ACM classification numbers into the submission form.
-3. Build the PDF:
-   - Double-click [`02_arxiv_preprint/build_pdf.bat`](02_arxiv_preprint/build_pdf.bat) (or run `pandoc manuscript.md -o manuscript.pdf --pdf-engine=xelatex`).
-4. Upload `manuscript.pdf` (and figures if using arXiv TeX upload).
-5. Select **CC-BY 4.0** license.
-6. Once submitted, arXiv/EarthArXiv will issue an identifier (e.g. `arXiv:2611.XXXXX` or a Crossref DOI). Update the subtitle of your Kaggle submission with this preprint link.
+### Step-by-Step Submission Instructions (arXiv TeX Direct Upload):
+1. Navigate to [arXiv Submission Portal](https://arxiv.org/submit) and log in.
+2. Select Primary Category: `cs.AI` (Artificial Intelligence).
+   - Cross Lists: `cs.SE` (Software Engineering), `q-bio.QM` (Quantitative Methods), `stat.ML` (Machine Learning).
+3. Open [`02_arxiv_preprint/arxiv_submission_metadata.txt`](02_arxiv_preprint/arxiv_submission_metadata.txt):
+   - Copy the Title, Author list, TeX-compatible Abstract, and MSC/ACM classification codes into the web form.
+4. Upload Files:
+   - Simply upload [`02_arxiv_preprint/arxiv_upload_package.zip`](02_arxiv_preprint/arxiv_upload_package.zip).
+   - It contains `manuscript.tex` at the root and all required figures in `figures/`.
+   - Click "Process Files" — arXiv AutoTeX will automatically compile it to PDF.
+5. Review the AutoTeX generated PDF preview, verify that all 4 figures render crisply, and choose **CC-BY 4.0** license.
+6. Submit! arXiv will issue an identifier (e.g., `arXiv:2611.XXXXX`).
+7. Update the subtitle of your Kaggle submission with this preprint link.
 
 ---
 

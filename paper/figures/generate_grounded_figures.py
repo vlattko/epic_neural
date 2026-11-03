@@ -18,15 +18,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+import os
 REPO_ROOT = Path(__file__).resolve().parents[2]
-RAW_CSV_PATH = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04"
-    r"\kickoff\validation_results\validation_1000pts_raw_comparison.csv"
-)
-PILOT_TS_PATH = Path(
-    r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04"
-    r"\kickoff\time_series\pilot_field_timeseries_hydrological.csv"
-)
+DATA_DIR = Path(os.environ.get("DATA_DIR", r"D:\Soil Water Nexus - HORIZON-MISS-2025-05-SOIL-04\kickoff"))
+RAW_CSV_PATH = DATA_DIR / "validation_results" / "validation_1000pts_raw_comparison.csv"
+PILOT_TS_PATH = DATA_DIR / "time_series" / "pilot_field_timeseries_hydrological.csv"
 FIGS_DIR = REPO_ROOT / "paper" / "figures"
 FIGS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -63,17 +59,31 @@ def generate_figure1_failure_regimes(df: pd.DataFrame) -> None:
     # Subplot B: Regime 2 - Alpine / Montane Extreme Warming Breakdown
     ax = axes[1]
     alp_585 = df[(df["ecotype"] == "Alpine / Montane") & (df["scenario"] == "ssp585_conventional")]
-    ax.scatter(alp_585["epic_soc_delta_t_c_ha"], alp_585["gpu_soc_delta_t_c_ha"], color="#7570b3", alpha=0.8, edgecolors="k", s=40)
+    ax.scatter(
+        alp_585["epic_soc_delta_t_c_ha"],
+        alp_585["gpu_soc_delta_t_c_ha"],
+        color="#7570b3",
+        alpha=0.85,
+        edgecolors="black",
+        s=55,
+        zorder=3,
+        label="Alpine Parcels (N=69)"
+    )
     # 1:1 reference line
-    lims = [-2.5, 3.5]
-    ax.plot(lims, lims, "k--", alpha=0.7, label="1:1 Perfect Agreement")
+    lims = [11.0, 24.5]
+    ax.plot(lims, lims, "k--", linewidth=1.5, alpha=0.75, label="1:1 Perfect Agreement", zorder=2)
     ax.set_xlim(lims)
     ax.set_ylim(lims)
     ax.set_title("B | Regime 2: Alpine SOC Collapse (SSP5-8.5)", fontweight="bold")
     ax.set_xlabel("EPIC Fortran True $\\Delta$SOC (t C/ha)")
     ax.set_ylabel("GPU Surrogate Predicted $\\Delta$SOC (t C/ha)")
-    ax.text(0.05, 0.88, "$R^2 = 0.1659$\nMAE = 1.025 t C/ha\nN = 69", transform=ax.transAxes,
-            bbox=dict(boxstyle="round,pad=0.4", fc="white", ec="grey", alpha=0.9))
+    ax.text(
+        0.05, 0.80,
+        "$R^2 = 0.1659$\nMAE = 1.025 t C/ha\nN = 69",
+        transform=ax.transAxes,
+        bbox=dict(boxstyle="round,pad=0.4", fc="white", ec="grey", alpha=0.9),
+        fontsize=9
+    )
     ax.legend(loc="lower right")
     ax.grid(True, linestyle=":", alpha=0.6)
 
